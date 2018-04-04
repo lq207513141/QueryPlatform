@@ -1,0 +1,7 @@
+*.html
+*.log
+.vs/
+packages/
+QueryPlatform/bin/
+QueryPlatform/obj/
+QueryPlatform/web.config

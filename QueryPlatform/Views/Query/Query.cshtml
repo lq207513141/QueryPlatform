@@ -1,0 +1,322 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section pagePluginsCSS{
+
+}
+<div class="m-content">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        设备状态查询
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <label class="col-form-label col-md-1">
+                        设备类型:
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control m-select2" id="MachineType" name="param">
+                            <option value="">=请选择=</option>
+                        </select>
+                    </div>
+                    <label class="col-form-label col-md-1">
+                        机台编号:
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control m-select2" id="MachineNo" name="param">
+                            <option value="">=请选择=</option>
+                        </select>
+                    </div>
+                    <label class="col-form-label col-md-1">
+                        机台参数:
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control m-select2" id="MachineVar" name="param" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-form-label col-md-1">
+                        开始时间:
+                    </label>
+                    <div class="col-md-3">
+                        <div class="input-group date">
+                            <input type="text" class="form-control m-input" readonly value="2016-10-26 00:00" id="TimeStart" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-calendar glyphicon-th"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-form-label col-md-1">
+                        结束时间:
+                    </label>
+                    <div class="col-md-3">
+                        <div class="input-group date">
+                            <input type="text" class="form-control m-input" readonly value="2016-10-26 12:00" id="TimeEnd" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-calendar glyphicon-th"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-form-label col-md-1"></label>
+                    <button id="Query" type="button" class="col-md-1 col-md-offset-1 btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+                        查询
+                    </button>
+                </div>
+                <div class="form-group m-form__group">
+                    <div id="container" class="col-md-12" style="height:500px"></div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Portlet-->
+</div>
+
+@section pagePluginsScripts{
+    <!--echarts插件引入-->
+    <script src="~/plug-ins/echarts/echarts.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //时间
+            $('#TimeStart').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm-dd hh:ii',
+                language: 'zh-CN'
+            });
+            $('#TimeEnd').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm-dd hh:ii',
+                language: 'zh-CN'
+            });
+            //下拉框
+            $('#MachineType').select2({ language: "zh-CN" });
+            $('#MachineNo').select2({ language: "zh-CN" });
+            $('#MachineVar').select2({ language: "zh-CN" });
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/QueryMachineType")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("#MachineType").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
+             //联动
+            $("#MachineType").on("change", function () {
+                //设备类型修改时，联动机台号
+                $("#MachineNo").empty();
+                $("#MachineNo").append($('<option></option>').val('').text('=请选择='));
+                var url ="@Url.Content("~/Query/QueryMachineNo?MachineType=")" + $("#MachineType").select2("val");
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        for (var i in result) {
+                            $("#MachineNo").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                    }
+                });
+                //设备类型修改时，联动机台参数
+                $("#MachineVar").empty();
+                url = "@Url.Content("~/Query/QueryMachineVar?MachineType=")" + $("#MachineType").select2("val");
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        for (var i in result) {
+                            $("#MachineVar").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                            alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                    }
+                });
+            });
+            function FormatTip(params) {
+                var date = new Date(params.value[0]);
+                data = date.getFullYear() + '-'
+                    + (date.getMonth() + 1) + '-'
+                    + date.getDate() + ' '
+                    + date.getHours() + ':'
+                    + date.getMinutes();
+                return data + '<br/>' + params.value[1];
+            }
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: FormatTip
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar', 'pie'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                dataZoom: {
+                    show: true,
+                    start: 0,
+                    end: 100
+                },
+                legend: {
+                    data: []
+                },
+                grid: {
+                    y2: 80
+                },
+                xAxis: [
+                    {
+                        type: 'time',
+                        splitNumber: 10
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: []
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/QueryData")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        option.series = result;
+                        var data = option.series;
+                        var legend;
+                        for (var i in data) {
+                            option.legend.data.push(data[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChart.setOption(option);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChart.setOption(option);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //查询
+            $('#Query').on('click', function () {
+                var MachineNo = $("#MachineNo").select2("val");
+                if (!MachineNo) {
+                    alert("请选择机台后再操作");
+                    return;
+                }
+                var MachineVardata = $("#MachineVar").select2("data");
+                var MachineVar = '';//参数值
+                for (var i in MachineVardata) {
+                    if (MachineVar == '') {
+                        MachineVar = MachineVardata[i].id.toString();
+                    }
+                    else {
+                        MachineVar += ',' + MachineVardata[i].id.toString();
+                    }
+                }
+                if (!MachineVar) {
+                    alert("请选择机台参数后再操作");
+                    return;
+                }
+                if (!$('#TimeEnd').val() || !$('#TimeStart').val()) {
+                    alert("请选择开始时间和结束时间后再操作");
+                    return;
+                }
+                if ($('#TimeStart').val() >= $('#TimeEnd').val()) {
+                    alert("开始时间必须小于结束时间");
+                    return;
+                }
+                console.log($("#MachineNo").select2("val"));
+                //ajax动态获取数据
+                var url = "@Url.Content("~/Query/QueryData?MachineNo=")" + MachineNo + "&MachineVar=" + MachineVar + "&TimeStart=" + $('#TimeStart').val() + "&TimeEnd=" + $('#TimeEnd').val();
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            // 获取json值
+                            option.series = result;
+                            var data = option.series;
+                            var legend;
+                            option.legend.data = [];
+                            for (var i in data) {
+                                option.legend.data.push(data[i].name);
+                            }
+                            // 为echarts对象加载数据
+                            myChart.setOption(option, true);
+                        }
+                        else {
+                            //没有返回结果时，清空画布
+                            myChart.clear();
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            });
+
+
+        });
+        function divHide() {
+            $("#left").hide();
+            $("#container").css("margin-left", "0px");
+            $("#off").show();
+        };
+        function divShow() {
+            $("#container").css("margin-left", "250px");
+            $("#left").show();
+            $("#off").hide();
+        };
+    </script>
+}
