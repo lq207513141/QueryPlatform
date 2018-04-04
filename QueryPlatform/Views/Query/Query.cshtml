@@ -11,7 +11,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        设备状态查询
+                        <i class="m-nav__link-icon la la-area-chart"></i> 设备状态查询
                     </h3>
                 </div>
             </div>
@@ -20,10 +20,10 @@
         <form class="m-form m-form--fit m-form--label-align-right">
             <div class="m-portlet__body">
                 <div class="form-group m-form__group row">
-                    <label class="col-form-label col-md-1">
+                    <label class="col-form-label col-md-1 offset-1">
                         设备类型:
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-control m-select2" id="MachineType" name="param">
                             <option value="">=请选择=</option>
                         </select>
@@ -31,7 +31,7 @@
                     <label class="col-form-label col-md-1">
                         机台编号:
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-control m-select2" id="MachineNo" name="param">
                             <option value="">=请选择=</option>
                         </select>
@@ -44,10 +44,10 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row">
-                    <label class="col-form-label col-md-1">
+                    <label class="col-form-label col-md-1 offset-1">
                         开始时间:
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="input-group date">
                             <input type="text" class="form-control m-input" readonly value="2016-10-26 00:00" id="TimeStart" />
                             <div class="input-group-append">
@@ -60,7 +60,7 @@
                     <label class="col-form-label col-md-1">
                         结束时间:
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="input-group date">
                             <input type="text" class="form-control m-input" readonly value="2016-10-26 12:00" id="TimeEnd" />
                             <div class="input-group-append">
@@ -70,10 +70,11 @@
                             </div>
                         </div>
                     </div>
-                    <label class="col-form-label col-md-1"></label>
-                    <button id="Query" type="button" class="col-md-1 col-md-offset-1 btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
-                        查询
-                    </button>
+                    <div class="col-md-1">
+                        <button id="Query" type="button" class="btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+                            查询
+                        </button>
+                    </div>
                 </div>
                 <div class="form-group m-form__group">
                     <div id="container" class="col-md-12" style="height:500px"></div>
@@ -110,7 +111,7 @@
             //下拉框
             $('#MachineType').select2({ language: "zh-CN" });
             $('#MachineNo').select2({ language: "zh-CN" });
-            $('#MachineVar').select2({ language: "zh-CN" });
+            $('#MachineVar').select2({ language: "zh-CN", closeOnSelect: false });
             $.ajax({
                 type: 'post',
                 url: "@Url.Content("~/Query/QueryMachineType")",
