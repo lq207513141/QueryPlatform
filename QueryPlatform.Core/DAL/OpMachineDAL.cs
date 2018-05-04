@@ -38,5 +38,16 @@ namespace QueryPlatform.Core.DAL
             }
             return list;
         }
+
+        /// <summary>
+        /// 获取织机实时状态
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetLoomStateQuery()
+        {
+            //根据当前页和行数，获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.sppbGetLoomStateQuery");
+            return data;
+        }
     }
 }
