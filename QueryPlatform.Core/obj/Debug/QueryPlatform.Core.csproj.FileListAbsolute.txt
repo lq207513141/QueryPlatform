@@ -34,3 +34,9 @@ D:\环思项目\QueryPlatform\QueryPlatform.Core\obj\Debug\QueryPlatform.Core.cs
 D:\环思项目\QueryPlatform\QueryPlatform.Core\obj\Debug\QueryPlatform.Core.csproj.CopyComplete
 D:\环思项目\QueryPlatform\QueryPlatform.Core\obj\Debug\QueryPlatform.Core.dll
 D:\环思项目\QueryPlatform\QueryPlatform.Core\obj\Debug\QueryPlatform.Core.pdb
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\HuanSi.Lib.dll
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\HuanSi.Lib.Enums.dll
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\log4net.dll
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\Oracle.ManagedDataAccess.dll
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\HuanSi.Lib.xml
+D:\环思项目\QueryPlatform\QueryPlatform.Core\bin\log4net.xml
