@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using huansi.assistantApi.Context;
-using eChartData;
+using QueryPlatform.Core;
+using QueryPlatform;
+using System.Web.Http;
 
 namespace MetronicTest.Controllers
 {
@@ -14,6 +16,13 @@ namespace MetronicTest.Controllers
         public ActionResult Query()
         {
             ViewBag.Title = "Query Page";
+
+            return View();
+        }
+
+        public ActionResult Tables()
+        {
+            ViewBag.Title = "Tables Page";
 
             return View();
         }
@@ -113,7 +122,7 @@ namespace MetronicTest.Controllers
                 };
                 int i = 0;
                 //获取明细数据
-                DataTable data2 = DBHelper.DbContext().m_ExecuteReader("SELECT StartTime,Value FROM dbo.DataCollectRecord(NOLOCK) WHERE VarAddress=:sVarAddress AND MachineID=:iMachineID AND StartTime>=:tStartTime AND StartTime<=:tEndTime", MachineVarList[j], MachineNo, tStartTime, tEndTime);
+                DataTable data2 = DBHelper.DbContext().m_ExecuteReader("SELECT StartTime,Value FROM dbo.DataCollectRecord(NOLOCK) WHERE VarAddress=:sVarAddress AND MachineID=:iMachineID AND StartTime>=:tStartTime AND StartTime<=:tEndTime ORDER BY StartTime", MachineVarList[j], MachineNo, tStartTime, tEndTime);
                 foreach (DataRow row2 in data2.Rows)
                 {
                     DateTime time = (DateTime)row2["StartTime"];
@@ -126,6 +135,61 @@ namespace MetronicTest.Controllers
             }
             //写入结果
             result.Data = list1;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取tables
+        /// </summary>
+        public JsonResult QueryTables()
+        {
+            //获取当前页
+            string strPage = Request.QueryString["pagination[page]"];
+            //获取行数
+            string strPerpage = Request.QueryString["pagination[perpage]"];          
+            int page = strPage == "" ? 1 : Convert.ToInt32(strPage);
+            int perpage = strPerpage == "" ? 10 : Convert.ToInt32(strPerpage);          
+            //获取排序
+            string field = Request.QueryString["sort[field]"];
+            string sort = Request.QueryString["sort[sort]"];
+            string order = "";
+            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort))
+                order = " ORDER BY " + field + " " + sort;
+            //json结果
+            JsonResult result = new JsonResult();
+            //json.data
+            AjaxTablePageData<OpMachine> pageData = new AjaxTablePageData<OpMachine>();
+            //根据当前页和行数，获取数据集
+            DataTable data = DBHelper.DbContext().m_Query("SELECT iIden,iMachineID,sMachineName,sProductInfo,iPlanSpeed,iCurSpeed,nCurEfficiency FROM dbo.OpMachine(NOLOCK)" + order, perpage, page, false);
+            //用于计算总数
+            DataTable dataCount = DBHelper.DbContext().m_ExecuteReader("SELECT dataCount=COUNT(1) FROM dbo.OpMachine(NOLOCK)");
+            List<OpMachine> list = new List<OpMachine>();
+            //数据集转换为列表
+            foreach (DataRow row in data.Rows)
+            {
+                OpMachine model = new OpMachine()
+                {
+                    iIden = (int)row["iIden"],
+                    iMachineID = (int)row["iMachineID"],
+                    sMachineName = (string)row["sMachineName"],
+                    sProductInfo = (string)row["sProductInfo"],
+                    iPlanSpeed = (int)row["iPlanSpeed"],
+                    iCurSpeed = (int)row["iCurSpeed"],
+                    nCurEfficiency = (decimal)row["nCurEfficiency"]
+                };
+                list.Add(model);
+            }
+            pageData.data = list ?? new List<OpMachine>();
+            //设置分页参数
+            pageData.meta = new AjaxTablePage
+            {
+                page = page,
+                perpage = perpage,
+                total = (int)dataCount.Rows[0]["dataCount"]
+            };
+            //允许get
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = pageData;
             return result;
         }
     }
