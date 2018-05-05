@@ -34,6 +34,7 @@ namespace MetronicTest.Controllers
         /// </summary>
         public JsonResult QueryTables()
         {
+            //方法1，后台分页，适合数据量大的情况
             //获取当前页  
             int page = Request.QueryString["pagination[page]"] == "" ? 1 : Convert.ToInt32(Request.QueryString["pagination[page]"]);
             //获取行数
@@ -45,8 +46,9 @@ namespace MetronicTest.Controllers
             JsonResult result = new JsonResult();
             //json.data
             AjaxTablePageData<OpMachine> pageData = new AjaxTablePageData<OpMachine>();
-            int total = 0;
+            //方法1 适合数据量大的情况
             //根据当前页和行数，获取数据集
+            int total = 0;
             List<OpMachine> list = new OpMachineDAL().GetList(page, perpage, out total, field, sort);
             pageData.data = list ?? new List<OpMachine>();
             //设置分页参数
@@ -56,10 +58,24 @@ namespace MetronicTest.Controllers
                 perpage = perpage,
                 total = total
             };
-            //允许get
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = pageData;
             return result;
+
+            //方法2，前台分页，适合数据量小的情况
+            ////获取排序
+            //string field = Request.QueryString["sort[field]"];
+            //string sort = Request.QueryString["sort[sort]"];
+            ////json结果
+            //JsonResult result = new JsonResult();
+            ////json.data
+            //AjaxTablePageData<OpMachine> pageData = new AjaxTablePageData<OpMachine>();
+            //List<OpMachine> list = new OpMachineDAL().GetListSimple(field, sort);
+            //pageData.data = list ?? new List<OpMachine>();
+            ////允许get
+            //result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            //result.Data = pageData;
+            //return result;
         }
 
         /// <summary>
@@ -70,51 +86,15 @@ namespace MetronicTest.Controllers
             //json结果
             JsonResult result = new JsonResult();
             //json.data
-            AjaxTablePageData<Object> pageData = new AjaxTablePageData<Object>();
+            AjaxTablePageData<LoomState> pageData = new AjaxTablePageData<LoomState>();
             //根据当前页和行数，获取数据集
-            DataTable data = new OpMachineDAL().GetLoomStateQuery();
-            //List<Object> objList = DataTableToList<Object>(data);
-            //pageData.data = objList;
+            List<LoomState> list = new OpMachineDAL().GetLoomStateQuery();
+            pageData.data = list;
             //允许get
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = pageData;
             return result;
         }
-
-        /// <summary>
-        /// DataTable转换成实体列表
-        /// </summary>
-        /// <typeparam name="T">实体 T </typeparam>
-        /// <param name="table">datatable</param>
-        /// <returns></returns>
-        public static List<T> DataTableToList<T>(DataTable table)
-            where T : class
-        {
-            if (table.Rows.Count==0)
-                return new List<T>();
-
-            List<T> list = new List<T>();
-            T model = default(T);
-            foreach (DataRow dr in table.Rows)
-            {
-                model = Activator.CreateInstance<T>();
-
-                foreach (DataColumn dc in dr.Table.Columns)
-                {
-                    object drValue = dr[dc.ColumnName];
-                    PropertyInfo pi = model.GetType().GetProperty(dc.ColumnName);
-
-                    if (pi != null && pi.CanWrite && (drValue != null && !Convert.IsDBNull(drValue)))
-                    {
-                        pi.SetValue(model, drValue, null);
-                    }
-                }
-
-                list.Add(model);
-            }
-            return list;
-        }
-
 
         ///// <summary>
         ///// 获取设备类型

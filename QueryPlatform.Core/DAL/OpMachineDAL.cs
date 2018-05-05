@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using huansi.assistantApi.Context;
 using QueryPlatform.Core.Model;
+using QueryPlatform.Core.Helper;
 
 namespace QueryPlatform.Core.DAL
 {
@@ -39,15 +40,29 @@ namespace QueryPlatform.Core.DAL
             return list;
         }
 
+        public List<OpMachine> GetListSimple(string field, string sort)
+        {
+            //拼接排序
+            string order = "";
+            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort))
+                order = " ORDER BY " + field + " " + sort;
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iIden,iMachineID,sMachineName,sProductInfo,iPlanSpeed,iCurSpeed,nCurEfficiency FROM dbo.OpMachine(NOLOCK)" + order);
+            //数据集转换为列表
+            List<OpMachine> list = TableListChange.TableToList<OpMachine>(data);           
+            return list;
+        }
+
         /// <summary>
         /// 获取织机实时状态
         /// </summary>
         /// <returns></returns>
-        public DataTable GetLoomStateQuery()
+        public List<LoomState> GetLoomStateQuery()
         {
             //根据当前页和行数，获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.sppbGetLoomStateQuery");
-            return data;
+            List<LoomState> list = TableListChange.TableToList<LoomState>(data);
+            return list;
         }
     }
 }
