@@ -96,7 +96,7 @@
 </div>
 
 @section pagePluginsScripts{
-    <script type="text/javascript">        
+    <script type="text/javascript">   
         $(document).ready(function () {
             var options = {
                 // datasource definition
@@ -112,13 +112,6 @@
                                 var dataSet = raw;
                                 if (typeof raw.data !== 'undefined') {
                                     dataSet = raw.data;
-                                    //for (var i = 0; i < (Object.keys(raw.data[0])).length; i++) {//Object.keys(obj) 获取key名称
-                                    //    var property = (Object.keys(raw.data[0]))[i];//获取列名
-                                    //    options.columns.push({
-                                    //        field: property,
-                                    //        title: property
-                                    //    });
-                                    //}
                                 }
                                 return dataSet;
                             },
@@ -138,7 +131,7 @@
                 },
                 // column sorting
                 sortable: true,
-                pagination: true,
+                pagination: false,
                 search: {
                     input: $('#generalSearch')
                 },
@@ -148,6 +141,7 @@
             $.ajax({
                 url: "@Url.Content("~/Query/LoomStateQuery")",
                 type: 'get',
+                async: false,//配置同步，等待执行结束
                 success: function (raw) {
                     for (var i = 0; i < (Object.keys(raw.data[0])).length; i++) {//Object.keys(obj) 获取key名称
                         var property = (Object.keys(raw.data[0]))[i];//获取列名
@@ -158,11 +152,7 @@
                     }
                 }
             });
-            console.log(options);
-            console.log(JSON.stringify(options));
-            //$('.m_datatable').mDatatable('destroy');
             var datatable = $('.m_datatable').mDatatable(options);
-
             var query = datatable.getDataSourceQuery();
 
             $('#m_form_status').on('change', function () {
