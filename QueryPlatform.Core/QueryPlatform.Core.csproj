@@ -81,10 +81,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\LoomDAL.cs" />
     <Compile Include="DAL\OpMachineDAL.cs" />
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\TableListChange.cs" />
-    <Compile Include="Model\LoomState.cs" />
+    <Compile Include="Model\Loom.cs" />
+    <Compile Include="Model\LoomStateCoordinate.cs" />
     <Compile Include="Model\OpMachine.cs" />
     <Compile Include="Model\ChartData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

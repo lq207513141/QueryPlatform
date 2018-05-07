@@ -442,7 +442,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Query\LoomState.cshtml" />
+    <Content Include="Views\Query\LoomStateNow.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Query\LoomStateNowList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

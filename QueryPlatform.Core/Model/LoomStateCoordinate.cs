@@ -5,9 +5,12 @@ using System.Web;
 
 namespace QueryPlatform.Core.Model
 {
-    public class LoomState
+    /// <summary>
+    /// 织机实时状态坐标图
+    /// </summary>
+    public class LoomStateCoordinate
     {
-        public int id { get; set; }
+        //public int id { get; set; }
         public string x1 { get; set; }
         public string x2 { get; set; }
         public string x3 { get; set; }

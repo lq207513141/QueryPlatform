@@ -10,7 +10,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        数据列表测试Demo
+                        织机实时状态查询
                     </h3>
                 </div>
             </div>
@@ -96,7 +96,7 @@
 </div>
 
 @section pagePluginsScripts{
-    <script type="text/javascript">
+    <script type="text/javascript">   
         $(document).ready(function () {
             var options = {
                 // datasource definition
@@ -106,7 +106,7 @@
                         read: {
                             // sample GET method
                             method: 'Get',
-                            url: "@Url.Content("~/Query/QueryTables")",
+                            url: "@Url.Content("~/Query/LoomStateQuery")",
                             map: function (raw) {
                                 // sample data mapping
                                 var dataSet = raw;
@@ -131,40 +131,31 @@
                 },
                 // column sorting
                 sortable: true,
-                pagination: true,
+                pagination: false,
                 search: {
                     input: $('#generalSearch')
                 },
                 // columns definition
-                columns: [{
-                    field: "iIden",
-                    title: "iIden",
-                    width: 50,
-                    sortable: false,
-                    selector: false,
-                    textAlign: 'center'
-                }, {
-                    field: "iMachineID",
-                    title: "机台号"
-                }, {
-                    field: "sMachineName",
-                    title: "机台名",
-                }, {
-                        field: "sProductInfo",
-                        title: "sProductInfo",
-                }, {
-                        field: "iPlanSpeed",
-                        title: "iPlanSpeed",
-                }, {
-                        field: "iCurSpeed",
-                        title: "iCurSpeed",
-                }, {
-                        field: "nCurEfficiency",
-                        title: "nCurEfficiency",
-                }, ]
+                columns: []
             };
+            $.ajax({
+                url: "@Url.Content("~/Query/LoomStateNowQuery")",
+                type: 'get',
+                async: false,//配置同步，等待执行结束
+                success: function (raw) {
+                    for (var i = 0; i < (Object.keys(raw.data[0])).length; i++) {//Object.keys(obj) 获取key名称
+                        var property = (Object.keys(raw.data[0]))[i];//获取列名
+                        options.columns.push({
+                            field: property,
+                            title: property,
+                            template: function (row) {
+                                return '<button type="button" class="btn m-btn--pill btn-success m-btn m-btn--custom">' + row[property] + '</button >';
+                            },
+                        });
+                    }
+                }
+            });
             var datatable = $('.m_datatable').mDatatable(options);
-
             var query = datatable.getDataSourceQuery();
 
             $('#m_form_status').on('change', function () {

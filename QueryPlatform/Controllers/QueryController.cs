@@ -24,7 +24,12 @@ namespace MetronicTest.Controllers
             return View();
         }
 
-        public ActionResult LoomState()
+        public ActionResult LoomStateNow()
+        {
+            return View();
+        }
+
+        public ActionResult LoomStateNowList()
         {
             return View();
         }
@@ -81,14 +86,37 @@ namespace MetronicTest.Controllers
         /// <summary>
         /// 织机实时状态查询
         /// </summary>
-        public JsonResult LoomStateQuery()
+        public JsonResult LoomStateNowQuery()
         {
             //json结果
             JsonResult result = new JsonResult();
             //json.data
-            AjaxTablePageData<LoomState> pageData = new AjaxTablePageData<LoomState>();
+            AjaxTablePageData<LoomStateCoordinate> pageData = new AjaxTablePageData<LoomStateCoordinate>();
             //根据当前页和行数，获取数据集
-            List<LoomState> list = new OpMachineDAL().GetLoomStateQuery();
+            List<LoomStateCoordinate> list = new LoomDAL().GetLoomStateQuery();
+            pageData.data = list;
+            //允许get
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = pageData;
+            return result;
+        }
+
+        /// <summary>
+        /// 织机实时状态列表查询
+        /// </summary>
+        public JsonResult LoomStateNowListQuery()
+        {
+            //获取查询
+            string query = Request.QueryString["query[generalSearch]"];
+            //获取排序
+            string field = Request.QueryString["sort[field]"];
+            string sort = Request.QueryString["sort[sort]"];
+            //json结果
+            JsonResult result = new JsonResult();
+            //json.data
+            AjaxTablePageData<Loom> pageData = new AjaxTablePageData<Loom>();
+            //根据当前页和行数，获取数据集
+            List<Loom> list = new LoomDAL().GetLoomStateNowListQuery(query,field, sort);
             pageData.data = list;
             //允许get
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;

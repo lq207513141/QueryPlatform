@@ -47,8 +47,10 @@ BEGIN TRY
 		WHILE @l<=@iMaxColumn
 		BEGIN
 			SET @sql = 'UPDATE A SET x'+ CONVERT(NVARCHAR(50),@l) + '='
-			+(SELECT sMachineName FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@l)
+			+''''+(SELECT sMachineName+'<br/>状态:正常' FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@l)+''''+
+			--+(SELECT sMachineName FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@l)
 			+'FROM #list A WHERE id='+CONVERT(NVARCHAR(50),@k)
+			PRINT @sql
 			EXEC(@sql) 
 			SET @l=@l+1
 		END
