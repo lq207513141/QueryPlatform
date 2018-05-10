@@ -108,6 +108,8 @@ namespace MetronicTest.Controllers
         {
             //获取查询
             string query = Request.QueryString["query[generalSearch]"];
+            //获取状态
+            string status = Request.QueryString["query[Status]"];
             //获取排序
             string field = Request.QueryString["sort[field]"];
             string sort = Request.QueryString["sort[sort]"];
@@ -116,11 +118,30 @@ namespace MetronicTest.Controllers
             //json.data
             AjaxTablePageData<Loom> pageData = new AjaxTablePageData<Loom>();
             //根据当前页和行数，获取数据集
-            List<Loom> list = new LoomDAL().GetLoomStateNowListQuery(query,field, sort);
+            List<Loom> list = new LoomDAL().GetLoomStateNowListQuery(query, status, field, sort);
             pageData.data = list;
             //允许get
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = pageData;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取设备类型
+        /// </summary>
+        public JsonResult GetLoomState()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().GetLoomState();
+            int count = data.Rows.Count;
+            object[] List = new object[count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["iStatusID"], (string)row["sStatusType"] };
+                i++;
+            }
+            result.Data = List;
             return result;
         }
 

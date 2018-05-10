@@ -24,24 +24,11 @@
                             <div class="col-md-4">
                                 <div class="m-form__group m-form__group--inline">
                                     <div class="m-form__label">
-                                        <label>
-                                            状态:
-                                        </label>
+
                                     </div>
                                     <div class="m-form__control">
-                                        <select class="form-control m-bootstrap-select m-bootstrap-select--solid" id="m_form_status">
-                                            <option value="">
-                                                All
-                                            </option>
-                                            <option value="1">
-                                                Pending
-                                            </option>
-                                            <option value="2">
-                                                Delivered
-                                            </option>
-                                            <option value="3">
-                                                Canceled
-                                            </option>
+                                        <select class="form-control m-select2" id="m_form_status">
+                                            <option value="">全部状态</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,12 +98,12 @@
                 },
                 // columns definition
                 columns: [{
-                    field: "iStatusID",
-                    title: "状态",
-                    width: 80,
+                    field: "iMachineID",
+                    title: "机台",
+                    width: 125,
                     template: function (row) {
                         var status = {
-                            0: { 'title': '正常', 'class': 'btn-success' },
+                            0: { 'title': '运转', 'class': 'btn-success' },
                             1: { 'title': '纬停', 'class': 'btn-yellow' },
                             2: { 'title': '经停', 'class': 'btn-danger' },
                             3: { 'title': '绞边停', 'class': 'btn-warning' },
@@ -128,13 +115,14 @@
                             9: { 'title': '离线', 'class': 'btn-outline-metal active' },
                             10: { 'title': '其他停', 'class': 'btn-lightsalmon' },
                         };
-                        return '<button type="button" class="btn m-btn--pill ' + status[row.iStatusID].class + ' m-btn m-btn--custom">' + status[row.iStatusID].title + '</button >'
+                        return '<button type="button" class="btn m-btn--pill ' + status[row.iStatusID].class + ' m-btn m-btn--custom">机台：<b>' + row.iMachineID +'</b><br/>状态：'+status[row.iStatusID].title + '</button >';
                         //return '<span class="m-badge ' + status[row.Status].class + ' m-badge--wide">' + status[row.Status].title + '</span>';
                     },
                 },{
-                    field: "iMachineID",
-                    title: "机台信息",
-                        template:'机台：<b>{{iMachineID}}</b> 车速：{{nBanciSpeed}}<br/>效率：{{sBancieff}}<br/>打纬：{{iPickCount}}<br/>运行：{{sRunTime}}<br/>停机：{{sAllStopTime}}',
+                        field: "iStatusID",
+                        title: "信息",
+                        sortable: false,
+                        template:'车速：{{nBanciSpeed}}<br/>效率：{{sBancieff}}<br/>打纬：{{iPickCount}}<br/>运行：{{sRunTime}}<br/>停机：{{sAllStopTime}}',
                 },
                 //{
                 //    field: "sBancieff",
@@ -155,18 +143,26 @@
                 ]
             };
             var datatable = $('.m_datatable').mDatatable(options);
-
+            $('#m_form_status').select2({ language: "zh-CN" });
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/GetLoomState")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("#m_form_status").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
             var query = datatable.getDataSourceQuery();
 
             $('#m_form_status').on('change', function () {
                 datatable.search($(this).val(), 'Status');
             }).val(typeof query.Status !== 'undefined' ? query.Status : '');
-
-            $('#m_form_type').on('change', function () {
-                datatable.search($(this).val(), 'Type');
-            }).val(typeof query.Type !== 'undefined' ? query.Type : '');
-
-            $('#m_form_status, #m_form_type').selectpicker();
         });
     </script>
 }

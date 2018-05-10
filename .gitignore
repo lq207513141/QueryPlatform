@@ -6,4 +6,6 @@ QueryPlatform/bin/
 QueryPlatform/obj/
 QueryPlatform.Core/bin/
 QueryPlatform.Core/obj/
-QueryPlatform/web.config
+QueryPlatform/Web.config
+QueryPlatform/Web.Debug.config
+QueryPlatform/Web.Release.config
