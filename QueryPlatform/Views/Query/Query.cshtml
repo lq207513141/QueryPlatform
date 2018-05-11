@@ -11,13 +11,14 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        <i class="m-nav__link-icon la la-area-chart"></i> 设备状态查询
+                        <i class="m-nav__link-icon la la-area-chart"></i> 设备参数查询
                     </h3>
                 </div>
             </div>
         </div>
         <!--begin::Form-->
         <form class="m-form m-form--fit m-form--label-align-right">
+            @Html.Hidden("iMachineGroupID", (string)ViewBag.iMachineGroupID)
             <div class="m-portlet__body">
                 <div class="form-group m-form__group row">
                     <label class="col-form-label col-md-1 offset-1">
@@ -49,7 +50,7 @@
                     </label>
                     <div class="col-md-2">
                         <div class="input-group date">
-                            <input type="text" class="form-control m-input" readonly value="2016-10-26 00:00" id="TimeStart" />
+                            <input type="text" class="form-control m-input" readonly value="2018-05-10 00:00" id="TimeStart" />
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar glyphicon-th"></i>
@@ -62,7 +63,7 @@
                     </label>
                     <div class="col-md-2">
                         <div class="input-group date">
-                            <input type="text" class="form-control m-input" readonly value="2016-10-26 12:00" id="TimeEnd" />
+                            <input type="text" class="form-control m-input" readonly value="2018-05-10 12:00" id="TimeEnd" />
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar glyphicon-th"></i>
@@ -71,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <button id="Query" type="button" class="btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+                        <button id="Query" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
                             查询
                         </button>
                     </div>
@@ -120,6 +121,10 @@
                 success: function (result) {
                     for (var i in result) {
                         $("#MachineType").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                    if ($('#iMachineGroupID').val()) {
+                        $('#MachineType').select2('val', $('#iMachineGroupID').val());
+                        $('#MachineType').prop('disabled', true);
                     }
                 },
                 error: function (XMLHttpRequest) {
@@ -174,7 +179,7 @@
                 return data + '<br/>' + params.value[1];
             }
             var dom = document.getElementById("container");
-            var myChart = echarts.init(dom);
+            var myChart = echarts.init(dom,'light');
             var app = {};
             option = null;
             option = {
@@ -186,7 +191,7 @@
                     show: true,
                     feature: {
                         mark: { show: true },
-                        dataView: { show: true, readOnly: false },
+                        dataView: { show: true, readOnly: true },
                         magicType: { show: true, type: ['line', 'bar', 'pie'] },
                         restore: { show: true },
                         saveAsImage: { show: true }
@@ -222,6 +227,7 @@
                 url: "@Url.Content("~/Query/QueryData")",
                 data: {},
                 dataType: 'json',
+                async:false,
                 success: function (result) {
                     if (result) {
                         // 获取json值
@@ -274,9 +280,8 @@
                     alert("开始时间必须小于结束时间");
                     return;
                 }
-                console.log($("#MachineNo").select2("val"));
                 //ajax动态获取数据
-                var url = "@Url.Content("~/Query/QueryData?MachineNo=")" + MachineNo + "&MachineVar=" + MachineVar + "&TimeStart=" + $('#TimeStart').val() + "&TimeEnd=" + $('#TimeEnd').val();
+                var url = "@Url.Content("~/Query/QueryData?MachineNo=")" + MachineNo + "&MachineVar=" + MachineVar + "&MachineType=" + $("#MachineType").select2("val")+ "&TimeStart=" + $('#TimeStart').val() + "&TimeEnd=" + $('#TimeEnd').val();
                 $.ajax({
                     type: 'post',
                     url: url,

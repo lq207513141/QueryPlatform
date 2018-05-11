@@ -40,19 +40,22 @@ BEGIN TRY
 
 	--按坐标点更新数据
 	DECLARE @k INT=1
-	DECLARE @l INT=1
+	DECLARE @m INT=1
 	WHILE @k<=@iMaxRow
 	BEGIN
-		SET @l=1
-		WHILE @l<=@iMaxColumn
+		SET @m=1
+		WHILE @m<=@iMaxColumn
 		BEGIN
-			SET @sql = 'UPDATE A SET x'+ CONVERT(NVARCHAR(50),@l) + '='
-			+''''+(SELECT sMachineName+'<br/>状态:正常' FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@l)+''''+
-			--+(SELECT sMachineName FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@l)
+			SET @sql = 'UPDATE A SET x'+ CONVERT(NVARCHAR(50),@m) + '='
+			+''''+(SELECT A.sMachineName+'<br/>状态:'+(SELECT TOP 1 C.sStatusType FROM dbo.vwMachineMap B(NOLOCK) 
+													  JOIN dbo.OpStatusType C(NOLOCK) ON C.iStatusID=B.iStatusID
+													  WHERE B.iMachineID=A.iMachineID) 
+			FROM dbo.OpMachine A(NOLOCK) WHERE A.iRowId=@k AND A.iColumnId=@m)+''''+
+			--+(SELECT sMachineName FROM dbo.OpMachine(NOLOCK) WHERE iRowId=@k AND iColumnId=@m)
 			+'FROM #list A WHERE id='+CONVERT(NVARCHAR(50),@k)
 			PRINT @sql
 			EXEC(@sql) 
-			SET @l=@l+1
+			SET @m=@m+1
 		END
 		SET @k=@k+1
 	END

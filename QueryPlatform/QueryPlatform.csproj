@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QueryPlatform</RootNamespace>
     <AssemblyName>QueryPlatform</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -59,9 +59,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -336,11 +336,13 @@
     <Content Include="assets\demo\default\custom\header\actions.js" />
     <Content Include="assets\demo\default\media\img\logo\favicon.ico" />
     <Content Include="assets\demo\default\media\img\logo\HUANSI.ico" />
+    <Content Include="assets\demo\default\media\img\logo\HUANSI1.ico" />
     <Content Include="assets\demo\default\media\img\logo\logo.png" />
     <Content Include="assets\demo\default\media\img\logo\logo_compact.png" />
     <Content Include="assets\demo\default\media\img\logo\logo_default_dark.png" />
     <Content Include="assets\demo\default\media\img\logo\logo_default_light.png" />
     <Content Include="assets\demo\default\media\img\logo\logo_default_light_huansi.png" />
+    <Content Include="assets\demo\default\media\img\logo\logo_default_light_huansi1.png" />
     <Content Include="assets\demo\default\media\img\misc\notification_bg.jpg" />
     <Content Include="assets\demo\default\media\img\misc\quick_actions_bg.jpg" />
     <Content Include="assets\demo\default\media\img\misc\user_profile_bg.jpg" />
@@ -449,6 +451,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\Query\LoomStateNowPie.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

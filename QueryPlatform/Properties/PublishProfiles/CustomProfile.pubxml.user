@@ -7,7 +7,7 @@
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAx0NSCT3RfUW57c4inU9qAwAAAAACAAAAAAAQZgAAAAEAACAAAAAuTfOgZFTc3t2f0p5Njgw5euPK3Ppk4HFX/idWgCz0dgAAAAAOgAAAAAIAACAAAAAI/E/cwh7sIKJqBu2mNo+dtrmNQYo50SQacrkBUAb5TyAAAABH77SzrAh2plbfbugjhPkB5yOQilXvawRXw7s8gTXVNkAAAACmly299nLBrwxRHoQjVeqlcAPuu6pCFdHU8cGI+W9JkCsOmGE7pwkvau9ZSmWnO4L7Ajt2fTVoxG7xnGWQu8FY</EncryptedPassword>
-    <_PublishTargetUrl>D:\环思项目\QueryPlatform发布</_PublishTargetUrl>
+    <_PublishTargetUrl>F:\环思项目\QueryPlatform发布</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -535,6 +535,9 @@
     <File Include="assets/demo/default/media/img/logo/HUANSI.ico">
       <publishTime>04/04/2018 10:29:21</publishTime>
     </File>
+    <File Include="assets/demo/default/media/img/logo/HUANSI1.ico">
+      <publishTime>05/11/2018 08:11:15</publishTime>
+    </File>
     <File Include="assets/demo/default/media/img/logo/logo.png">
       <publishTime>04/04/2018 10:29:21</publishTime>
     </File>
@@ -549,6 +552,9 @@
     </File>
     <File Include="assets/demo/default/media/img/logo/logo_default_light_huansi.png">
       <publishTime>04/04/2018 10:29:21</publishTime>
+    </File>
+    <File Include="assets/demo/default/media/img/logo/logo_default_light_huansi1.png">
+      <publishTime>05/10/2018 17:35:46</publishTime>
     </File>
     <File Include="assets/demo/default/media/img/misc/notification_bg.jpg">
       <publishTime>04/04/2018 10:29:21</publishTime>
@@ -704,13 +710,13 @@
       <publishTime>04/04/2018 10:25:26</publishTime>
     </File>
     <File Include="bin/HuanSi.Lib.dll">
-      <publishTime>04/19/2018 09:51:45</publishTime>
+      <publishTime>05/10/2018 09:33:35</publishTime>
     </File>
     <File Include="bin/HuanSi.Lib.Enums.dll">
-      <publishTime>04/19/2018 09:51:45</publishTime>
+      <publishTime>05/10/2018 09:32:09</publishTime>
     </File>
     <File Include="bin/log4net.dll">
-      <publishTime>06/20/2016 14:39:04</publishTime>
+      <publishTime>05/10/2018 09:33:35</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
@@ -743,22 +749,22 @@
       <publishTime>08/03/2014 20:33:56</publishTime>
     </File>
     <File Include="bin/Oracle.ManagedDataAccess.dll">
-      <publishTime>06/02/2016 10:02:48</publishTime>
+      <publishTime>05/10/2018 09:36:52</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>05/09/2018 10:22:28</publishTime>
+      <publishTime>05/11/2018 10:33:42</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
       <publishTime>05/02/2018 11:29:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>05/09/2018 10:22:28</publishTime>
+      <publishTime>05/11/2018 10:33:42</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>05/09/2018 10:22:31</publishTime>
+      <publishTime>05/11/2018 10:33:47</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>05/09/2018 10:22:31</publishTime>
+      <publishTime>05/11/2018 10:33:47</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -920,7 +926,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>04/09/2018 10:35:35</publishTime>
+      <publishTime>05/10/2018 08:57:08</publishTime>
     </File>
     <File Include="plug-ins/echarts/echarts.js">
       <publishTime>04/04/2018 10:28:55</publishTime>
@@ -932,13 +938,13 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNow.cshtml">
-      <publishTime>05/09/2018 09:58:33</publishTime>
+      <publishTime>05/11/2018 08:27:04</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNowList.cshtml">
-      <publishTime>05/09/2018 09:40:57</publishTime>
+      <publishTime>05/11/2018 08:27:03</publishTime>
     </File>
     <File Include="Views/Query/Query.cshtml">
-      <publishTime>05/05/2018 14:50:01</publishTime>
+      <publishTime>05/11/2018 08:48:45</publishTime>
     </File>
     <File Include="Views/Query/Tables.cshtml">
       <publishTime>05/07/2018 15:11:04</publishTime>
@@ -947,16 +953,16 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/09/2018 09:04:29</publishTime>
+      <publishTime>05/11/2018 10:32:36</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>05/09/2018 09:50:00</publishTime>
+      <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/09/2018 10:22:31</publishTime>
+      <publishTime>05/11/2018 10:33:49</publishTime>
     </File>
   </ItemGroup>
 </Project>
