@@ -87,6 +87,7 @@
     <Compile Include="DAL\OpMachineDAL.cs" />
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\TableListChange.cs" />
+    <Compile Include="Model\PieData.cs" />
     <Compile Include="Model\Loom.cs" />
     <Compile Include="Model\LoomStateCoordinate.cs" />
     <Compile Include="Model\OpMachine.cs" />

@@ -23,7 +23,7 @@ namespace MetronicTest.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Tables()
         {
             return View();
@@ -212,7 +212,6 @@ namespace MetronicTest.Controllers
         /// </summary>
         public JsonResult QueryData(string MachineNo, string MachineVar, string MachineType, string TimeStart, string TimeEnd)
         {
-            string url = Request.Url.ToString();
             JsonResult result = new JsonResult();
             if (String.IsNullOrEmpty(MachineNo) || String.IsNullOrEmpty(MachineVar))
             {
@@ -227,7 +226,7 @@ namespace MetronicTest.Controllers
             for (int j = 0; j < MachineVarList.Length; j++)
             {
                 //获取类型名称和明细个数
-                DataTable data1 = new YarnMachineDAL().GetMachineVarAndCount(MachineNo, MachineVarList[j], MachineType,TimeStart,TimeEnd);
+                DataTable data1 = new YarnMachineDAL().GetMachineVarAndCount(MachineNo, MachineVarList[j], MachineType, TimeStart, TimeEnd);
                 if (data1.Rows.Count == 0)
                 {
                     continue;
@@ -259,6 +258,62 @@ namespace MetronicTest.Controllers
             }
             //写入结果
             result.Data = list1;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停机情况
+        /// </summary>
+        public JsonResult GetLoomPie1()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().GetLoomPie1();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停机明细
+        /// </summary>
+        public JsonResult GetLoomPie2()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().GetLoomPie2();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取效率统计
+        /// </summary>
+        public JsonResult GetLoomPie3()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().GetLoomPie3();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取车速情况
+        /// </summary>
+        public JsonResult GetLoomPie4()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().GetLoomPie4();
+            //写入结果
+            result.Data = list;
             return result;
         }
     }

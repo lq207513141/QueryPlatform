@@ -76,5 +76,73 @@ LEFT JOIN dbo.vwMachineMap C(NOLOCK) ON C.iMachineID=X.iMachineID" + where + ord
             DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iStatusID,sStatusType FROM dbo.OpStatusType(NOLOCK)");
             return data;
         }
+
+        /// <summary>
+        /// 获取停机情况
+        /// </summary>
+        /// <returns></returns>
+        public List<PieData> GetLoomPie1()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT value=COUNT(1),name='运转'
+FROM dbo.OpMachine A(NOLOCK)
+JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
+WHERE B.iStatusID = 0
+UNION
+SELECT count = COUNT(1), name = '停台'
+FROM dbo.OpMachine A(NOLOCK)
+JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
+WHERE B.iStatusID <> 0");
+            List<PieData> list = TableListChange.TableToList<PieData>(data);
+            return list;
+        }
+
+        /// <summary>
+        /// 获取停机明细
+        /// </summary>
+        /// <returns></returns>
+        public List<PieData> GetLoomPie2()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzAnalyBanGetMacStatus @iDeptID = 'ALL'");
+            List<PieData> list = new List<PieData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new PieData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取效率情况
+        /// </summary>
+        /// <returns></returns>
+        public List<PieData> GetLoomPie3()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzAnalyBanGetefficiencyFendang @iDeptID = 'ALL',@iClassListID = 'NOW'");
+            List<PieData> list = new List<PieData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new PieData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取车速情况
+        /// </summary>
+        /// <returns></returns>
+        public List<PieData> GetLoomPie4()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC spzzAnalyBanGetnSpeedFendang @iDeptID='ALL'");
+            List<PieData> list = new List<PieData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new PieData { value=(int)row["iMacNum"], name=(string)row["sStatusType"] });
+            }
+            return list;
+        }
     }
 }

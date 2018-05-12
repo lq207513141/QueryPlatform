@@ -752,19 +752,19 @@
       <publishTime>05/10/2018 09:36:52</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>05/11/2018 10:33:42</publishTime>
+      <publishTime>05/12/2018 14:11:43</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
       <publishTime>05/02/2018 11:29:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>05/11/2018 10:33:42</publishTime>
+      <publishTime>05/12/2018 14:11:43</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>05/11/2018 10:33:47</publishTime>
+      <publishTime>05/12/2018 14:11:49</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>05/11/2018 10:33:47</publishTime>
+      <publishTime>05/12/2018 14:11:49</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -938,13 +938,16 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNow.cshtml">
-      <publishTime>05/11/2018 08:27:04</publishTime>
+      <publishTime>05/12/2018 10:58:50</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNowList.cshtml">
       <publishTime>05/11/2018 08:27:03</publishTime>
     </File>
+    <File Include="Views/Query/LoomStateNowPie.cshtml">
+      <publishTime>05/12/2018 13:31:31</publishTime>
+    </File>
     <File Include="Views/Query/Query.cshtml">
-      <publishTime>05/11/2018 08:48:45</publishTime>
+      <publishTime>05/11/2018 17:16:20</publishTime>
     </File>
     <File Include="Views/Query/Tables.cshtml">
       <publishTime>05/07/2018 15:11:04</publishTime>
@@ -953,7 +956,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/11/2018 10:32:36</publishTime>
+      <publishTime>05/12/2018 09:51:25</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/04/2018 10:24:50</publishTime>
