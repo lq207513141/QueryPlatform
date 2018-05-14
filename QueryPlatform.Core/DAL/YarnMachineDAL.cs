@@ -40,7 +40,7 @@ namespace QueryPlatform.Core.DAL
 FROM dbo.OpprotocolSet A(NOLOCK) 
 JOIN Opprotocol B(NOLOCK) ON B.iiden=A.iOpprotocolid
 JOIN dbo.OpprotocolMap C(NOLOCK) ON C.iOpprotocolid=B.iiden
-WHERE A.bUsable=1 AND B.bUsable=1 AND C.bUsable=1
+WHERE A.bUsable=1 AND B.bUsable=1 AND C.bUsable=1 AND C.isNum=1
 AND A.iMachineGroupID=:machineType
 GROUP BY C.iaddress,C.saddress", machineType);
             return data;

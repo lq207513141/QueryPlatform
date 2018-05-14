@@ -1,0 +1,188 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section pagePluginsCSS{
+
+}
+<div class="m-content">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <i class="m-nav__link-icon la la-area-chart"></i> 织机车速实时图Demo
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <label class="col-form-label col-md-1">
+                        机台编号:
+                    </label>
+                    <div class="col-md-2">
+                        <select class="form-control m-select2" id="MachineNo" name="param">
+                            <option value="">=请选择=</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                    <div id="container" class="col-md-12" style="height:500px"></div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Portlet-->
+</div>
+
+
+@section pagePluginsScripts{
+    <!--echarts插件引入-->
+    <script src="~/plug-ins/echarts/echarts.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MachineNo').select2({ language: "zh-CN" });
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                tooltip: {
+                    formatter: "{a} <br/>{c} {b}"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                series: [
+                    {
+                        name: '速度',
+                        type: 'gauge',
+                        z: 3,
+                        min: 0,
+                        max: 900,
+                        splitNumber: 9,
+                        radius: '80%',
+                        axisLine: {            // 坐标轴线
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                width: 10
+                            }
+                        },
+                        axisTick: {            // 坐标轴小标记
+                            length: 15,        // 属性length控制线长
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                color: 'auto'
+                            }
+                        },
+                        splitLine: {           // 分隔线
+                            length: 20,         // 属性length控制线长
+                            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                color: 'auto'
+                            }
+                        },
+                        axisLabel: {
+                            backgroundColor: 'auto',
+                            borderRadius: 2,
+                            color: '#eee',
+                            padding: 3,
+                            textShadowBlur: 2,
+                            textShadowOffsetX: 1,
+                            textShadowOffsetY: 1,
+                            textShadowColor: '#222'
+                        },
+                        title: {
+                            // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder',
+                            fontSize: 14,
+                            fontStyle: 'italic'
+                        },
+                        detail: {
+                            // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            formatter: function (value) {
+                                //value = (value + '').split('.');
+                                //value.length < 2 && (value.push('00'));
+                                //return ('00' + value[0]).slice(-2)
+                                //+ '.' + (value[1] + '00').slice(0, 2);
+                                return value;
+                            },
+                            fontWeight: 'bolder',
+                            borderRadius: 3,
+                            backgroundColor: '#444',
+                            borderColor: '#aaa',
+                            shadowBlur: 5,
+                            shadowColor: '#333',
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 3,
+                            borderWidth: 2,
+                            textBorderColor: '#000',
+                            textBorderWidth: 2,
+                            textShadowBlur: 2,
+                            textShadowColor: '#fff',
+                            textShadowOffsetX: 0,
+                            textShadowOffsetY: 0,
+                            fontFamily: 'Arial',
+                            width: 100,
+                            color: '#eee',
+                            rich: {}
+                        },
+                        data: [{ value: 40, name: '车速 RPM' }]
+                    },
+                    {
+                        name: '转速',
+                        type: 'gauge',
+                        center: ['20%', '55%'],    // 默认全局居中
+                        radius: '60%',
+                        min: 0,
+                        max: 100,
+                        endAngle: 45,
+                        splitNumber: 10,
+                        axisLine: {            // 坐标轴线
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                width: 8
+                            }
+                        },
+                        axisTick: {            // 坐标轴小标记
+                            length: 12,        // 属性length控制线长
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                color: 'auto'
+                            }
+                        },
+                        splitLine: {           // 分隔线
+                            length: 20,         // 属性length控制线长
+                            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                color: 'auto'
+                            }
+                        },
+                        pointer: {
+                            width: 5
+                        },
+                        title: {
+                            offsetCenter: [0, '-30%'],       // x, y，单位px
+                        },
+                        detail: {
+                            // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder'
+                        },
+                        data: [{ value: 1.5, name: '效率 %' }]
+                    },
+                ]
+            };
+
+            setInterval(function () {
+                option.series[0].data[0].value = (Math.random() * 900).toFixed(0) - 0;
+                option.series[1].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+                myChart.setOption(option, true);
+            }, 2000);;
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+        });
+    </script>
+}

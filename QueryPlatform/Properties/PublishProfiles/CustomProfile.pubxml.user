@@ -7,7 +7,7 @@
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAx0NSCT3RfUW57c4inU9qAwAAAAACAAAAAAAQZgAAAAEAACAAAAAuTfOgZFTc3t2f0p5Njgw5euPK3Ppk4HFX/idWgCz0dgAAAAAOgAAAAAIAACAAAAAI/E/cwh7sIKJqBu2mNo+dtrmNQYo50SQacrkBUAb5TyAAAABH77SzrAh2plbfbugjhPkB5yOQilXvawRXw7s8gTXVNkAAAACmly299nLBrwxRHoQjVeqlcAPuu6pCFdHU8cGI+W9JkCsOmGE7pwkvau9ZSmWnO4L7Ajt2fTVoxG7xnGWQu8FY</EncryptedPassword>
-    <_PublishTargetUrl>F:\环思项目\QueryPlatform发布</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\环思项目\QueryPlatform发布</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -710,13 +710,13 @@
       <publishTime>04/04/2018 10:25:26</publishTime>
     </File>
     <File Include="bin/HuanSi.Lib.dll">
-      <publishTime>05/10/2018 09:33:35</publishTime>
+      <publishTime>05/13/2018 18:47:16</publishTime>
     </File>
     <File Include="bin/HuanSi.Lib.Enums.dll">
-      <publishTime>05/10/2018 09:32:09</publishTime>
+      <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/log4net.dll">
-      <publishTime>05/10/2018 09:33:35</publishTime>
+      <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
@@ -749,22 +749,22 @@
       <publishTime>08/03/2014 20:33:56</publishTime>
     </File>
     <File Include="bin/Oracle.ManagedDataAccess.dll">
-      <publishTime>05/10/2018 09:36:52</publishTime>
+      <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>05/12/2018 14:11:43</publishTime>
+      <publishTime>05/14/2018 17:12:54</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
-      <publishTime>05/02/2018 11:29:16</publishTime>
+      <publishTime>05/10/2018 08:57:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>05/12/2018 14:11:43</publishTime>
+      <publishTime>05/14/2018 17:12:54</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>05/12/2018 14:11:49</publishTime>
+      <publishTime>05/14/2018 17:12:59</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>05/12/2018 14:11:49</publishTime>
+      <publishTime>05/14/2018 17:12:59</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -938,13 +938,16 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNow.cshtml">
-      <publishTime>05/12/2018 10:58:50</publishTime>
+      <publishTime>05/14/2018 16:50:31</publishTime>
+    </File>
+    <File Include="Views/Query/LoomStateNowGauge.cshtml">
+      <publishTime>05/14/2018 17:11:11</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNowList.cshtml">
       <publishTime>05/11/2018 08:27:03</publishTime>
     </File>
     <File Include="Views/Query/LoomStateNowPie.cshtml">
-      <publishTime>05/12/2018 13:31:31</publishTime>
+      <publishTime>05/12/2018 16:52:03</publishTime>
     </File>
     <File Include="Views/Query/Query.cshtml">
       <publishTime>05/11/2018 17:16:20</publishTime>
@@ -956,7 +959,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/12/2018 09:51:25</publishTime>
+      <publishTime>05/14/2018 17:06:49</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/04/2018 10:24:50</publishTime>
@@ -965,7 +968,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/11/2018 10:33:49</publishTime>
+      <publishTime>05/14/2018 17:13:00</publishTime>
     </File>
   </ItemGroup>
 </Project>

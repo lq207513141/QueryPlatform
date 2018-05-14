@@ -14,10 +14,10 @@ namespace QueryPlatform.Core.DAL
         /// 获取织机实时状态
         /// </summary>
         /// <returns></returns>
-        public List<LoomStateCoordinate> GetLoomStateQuery()
+        public List<LoomStateCoordinate> GetLoomStateQuery(int machineVar)
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.sppbGetLoomStateQuery");
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.sppbGetLoomStateQuery @iType=:machineVar", machineVar);
             List<LoomStateCoordinate> list = TableListChange.TableToList<LoomStateCoordinate>(data);
             return list;
         }

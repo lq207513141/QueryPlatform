@@ -24,6 +24,11 @@ namespace MetronicTest.Controllers
             return View();
         }
 
+        public ActionResult LoomStateNowGauge()
+        {
+            return View();
+        }
+
         public ActionResult Tables()
         {
             return View();
@@ -93,12 +98,14 @@ namespace MetronicTest.Controllers
         /// </summary>
         public JsonResult LoomStateNowQuery()
         {
+            string varCheck = Request.QueryString["query[varCheck]"]; 
+            int machineVar = string.IsNullOrEmpty(varCheck) ? 0 : Convert.ToInt32(varCheck);
             //json结果
             JsonResult result = new JsonResult();
             //json.data
             AjaxTablePageData<LoomStateCoordinate> pageData = new AjaxTablePageData<LoomStateCoordinate>();
             //根据当前页和行数，获取数据集
-            List<LoomStateCoordinate> list = new LoomDAL().GetLoomStateQuery();
+            List<LoomStateCoordinate> list = new LoomDAL().GetLoomStateQuery(machineVar);
             pageData.data = list;
             //允许get
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
