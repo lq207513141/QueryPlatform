@@ -11,7 +11,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        <i class="m-nav__link-icon la la-area-chart"></i> 织机车速实时图Demo
+                        <i class="m-nav__link-icon la la-tachometer"></i> 织机车速实时图
                     </h3>
                 </div>
             </div>
@@ -46,6 +46,20 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#MachineNo').select2({ language: "zh-CN" });
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/GetLoomMachineNo")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("#MachineNo").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
             var dom = document.getElementById("container");
             var myChart = echarts.init(dom);
             var app = {};
@@ -63,8 +77,9 @@
                 },
                 series: [
                     {
-                        name: '速度',
+                        name: '车速',
                         type: 'gauge',
+                        center: ['70%', '55%'],
                         z: 3,
                         min: 0,
                         max: 900,
@@ -128,14 +143,14 @@
                             textShadowOffsetX: 0,
                             textShadowOffsetY: 0,
                             fontFamily: 'Arial',
-                            width: 100,
+                            width: 50,
                             color: '#eee',
                             rich: {}
                         },
-                        data: [{ value: 40, name: '车速 RPM' }]
+                        data: [{ value: 0, name: '车速 RPM' }]
                     },
                     {
-                        name: '转速',
+                        name: '效率',
                         type: 'gauge',
                         center: ['20%', '55%'],    // 默认全局居中
                         radius: '60%',
@@ -170,18 +185,42 @@
                             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                             fontWeight: 'bolder'
                         },
-                        data: [{ value: 1.5, name: '效率 %' }]
+                        data: [{ value: 0, name: '效率 %' }]
                     },
                 ]
             };
 
+            //设置自动刷新时间
             setInterval(function () {
-                option.series[0].data[0].value = (Math.random() * 900).toFixed(0) - 0;
-                option.series[1].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                myChart.setOption(option, true);
-            }, 2000);;
+                GetData();
+            }, 60000);
             if (option && typeof option === "object") {
                 myChart.setOption(option, true);
+            }
+
+            //选择机台号后
+            $("#MachineNo").on("change", function () {
+                GetData();
+            });
+
+            function GetData() {
+                if ($("#MachineNo").select2("val")) {
+                    $.ajax({
+                        type: 'post',
+                        url: "@Url.Content("~/Query/GetLoomStateNowGauge?iMachineID=")" + $("#MachineNo").select2("val"),
+                        data: {},
+                        dataType: 'json',
+                        async: false,
+                        success: function (result) {
+                            option.series[0].data[0].value = result[0][0];
+                            option.series[1].data[0].value = result[0][1];
+                            myChart.setOption(option, true);
+                        },
+                        error: function (XMLHttpRequest) {
+                            alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                        }
+                    });
+                }
             }
         });
     </script>

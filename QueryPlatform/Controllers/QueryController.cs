@@ -196,6 +196,44 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
+        /// 获取织机机台号
+        /// </summary>
+        public JsonResult GetLoomMachineNo()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().GetLoomMachineNo();
+            int count = data.Rows.Count;
+            object[] List = new object[count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["iMachineID"], (string)row["sMachineName"] };
+                i++;
+            }
+            result.Data = List;
+            return result;
+        }
+
+        /// <summary>
+        /// 织机实时车速图
+        /// </summary>
+        public JsonResult GetLoomStateNowGauge(string iMachineID)
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().GetLoomStateNowGauge(iMachineID);
+            int count = data.Rows.Count;
+            object[] List = new object[count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { Convert.ToInt32((decimal)row["nBanciSpeed"]), (decimal)row["nBancieff"] };
+                i++;
+            }
+            result.Data = List;
+            return result;
+        }
+
+        /// <summary>
         /// 获取机型参数
         /// </summary>
         public JsonResult QueryMachineVar(string machineType)

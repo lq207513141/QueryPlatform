@@ -45,7 +45,7 @@ namespace QueryPlatform.Core.DAL
             }
             //拼接排序
             string order = "";
-            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort))
+            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort)&& field== "iMachineID")
                 order = " ORDER BY " + field + " " + sort;
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT X.iMachineID,X.iPickCount
@@ -143,6 +143,35 @@ WHERE B.iStatusID <> 0");
                 list.Add(new PieData { value=(int)row["iMacNum"], name=(string)row["sStatusType"] });
             }
             return list;
+        }
+
+        /// <summary>
+        /// 获取织机机台号
+        /// </summary>
+        public DataTable GetLoomMachineNo()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT A.iMachineID,A.sMachineName FROM dbo.OpMachine A(NOLOCK) ORDER BY A.iMachineID");
+            return data;
+        }
+
+        /// <summary>
+        /// 获取织机机台号
+        /// </summary>
+        public DataTable GetLoomStateNowGauge(string iMachineID)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT nBancieff=CONVERT(DECIMAL(18, 2),CASE WHEN (X.iRunTime + X.iAllStopTime)=0 THEN 0 ELSE X.iRunTime * 100.0/ (X.iRunTime + X.iAllStopTime)END)
+, nBanciSpeed = CASE WHEN X.iRunTime = 0 THEN 0 ELSE  CONVERT(DECIMAL(18, 0), (X.iPickCount * 60.0) / iRunTime) END
+FROM(SELECT A.iMachineID
+     , iRunTime = SUM(ISNULL(B.iRunTime, 0))
+     , iAllStopTime = SUM(ISNULL(B.iAllStopTime, 0))
+     , iPickCount = SUM(ISNULL(B.iPickCount, 0))
+     FROM dbo.OpMachine A(NOLOCK)
+     LEFT JOIN dbo.OpClassDataList B(NOLOCK) ON B.iMachineID = A.iMachineID AND B.iClassListID = dbo.fnzzGetClassid('NOW')
+     WHERE A.iMachineID =:iMachineID
+     GROUP BY A.iMachineID)X", iMachineID);
+            return data;
         }
     }
 }

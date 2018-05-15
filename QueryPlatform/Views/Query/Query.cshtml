@@ -233,8 +233,8 @@
                         // 获取json值
                         option.series = result;
                         var data = option.series;
-                        var legend;
                         for (var i in data) {
+                            //生成线标题
                             option.legend.data.push(data[i].name);
                         }
                         // 为echarts对象加载数据

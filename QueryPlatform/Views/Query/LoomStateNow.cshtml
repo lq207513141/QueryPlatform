@@ -113,7 +113,7 @@
                     footer: false // display/hide footer
                 },
                 // column sorting
-                sortable: true,
+                sortable: false,
                 pagination: false,
                 search: {
                     input: $('#generalSearch')
@@ -131,6 +131,7 @@
                         options.columns.push({
                             field: property,
                             title: property,
+                            width:115,
                             //template: function (row) {
                             //    return '<button type="button" class="btn m-btn--pill btn-success m-btn m-btn--custom">' + row[property] + '</button >';
                             //},
