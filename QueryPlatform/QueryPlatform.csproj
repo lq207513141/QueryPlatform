@@ -454,6 +454,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Views\Loom\LoomStateNowPie.cshtml" />
     <Content Include="Views\Loom\LoomStateNowGauge.cshtml" />
+    <Content Include="Views\Loom\LoomAnalysisPie.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

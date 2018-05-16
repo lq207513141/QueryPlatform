@@ -34,6 +34,11 @@ namespace MetronicTest.Controllers
             return View();
         }
 
+        public ActionResult LoomAnalysisPie()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 织机实时状态查询
         /// </summary>
@@ -187,6 +192,48 @@ namespace MetronicTest.Controllers
 
             //获取类型名称和明细个数
             List<PieData> list = new LoomDAL().GetLoomPie4();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停台次数分析
+        /// </summary>
+        public JsonResult LoomAnalysisPie1()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().LoomAnalysisPie1();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停台时间分析
+        /// </summary>
+        public JsonResult LoomAnalysisPie2()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().LoomAnalysisPie2();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取低效率机台
+        /// </summary>
+        public JsonResult LoomAnalysisPie4()
+        {
+            JsonResult result = new JsonResult();
+
+            //获取类型名称和明细个数
+            List<PieData> list = new LoomDAL().LoomAnalysisPie4();
             //写入结果
             result.Data = list;
             return result;
