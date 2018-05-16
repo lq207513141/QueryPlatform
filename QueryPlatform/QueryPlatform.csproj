@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoomController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -444,15 +445,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Query\LoomStateNow.cshtml" />
+    <Content Include="Views\Loom\LoomStateNow.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Query\LoomStateNowList.cshtml" />
+    <Content Include="Views\Loom\LoomStateNowList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
-    <Content Include="Views\Query\LoomStateNowPie.cshtml" />
-    <Content Include="Views\Query\LoomStateNowGauge.cshtml" />
+    <Content Include="Views\Loom\LoomStateNowPie.cshtml" />
+    <Content Include="Views\Loom\LoomStateNowGauge.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

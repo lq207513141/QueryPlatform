@@ -89,7 +89,7 @@
                         read: {
                             // sample GET method
                             method: 'Get',
-                            url: "@Url.Content("~/Query/LoomStateNowQuery")",
+                            url: "@Url.Content("~/Loom/LoomStateNowQuery")",
                             map: function (raw) {
                                 // sample data mapping
                                 var dataSet = raw;
@@ -122,7 +122,7 @@
                 columns: []
             };
             $.ajax({
-                url: "@Url.Content("~/Query/LoomStateNowQuery")",
+                url: "@Url.Content("~/Loom/LoomStateNowQuery")",
                 type: 'get',
                 async: false,//配置同步，等待执行结束
                 success: function (raw) {

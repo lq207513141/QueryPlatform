@@ -67,7 +67,7 @@
                         read: {
                             // sample GET method
                             method: 'Get',
-                            url: "@Url.Content("~/Query/LoomStateNowListQuery")",
+                            url: "@Url.Content("~/Loom/LoomStateNowListQuery")",
                             map: function (raw) {
                                 // sample data mapping
                                 var dataSet = raw;
@@ -146,7 +146,7 @@
             $('#m_form_status').select2({ language: "zh-CN" });
             $.ajax({
                 type: 'post',
-                url: "@Url.Content("~/Query/GetLoomState")",
+                url: "@Url.Content("~/Loom/GetLoomState")",
                 data: {},
                 dataType: 'json',
                 success: function (result) {

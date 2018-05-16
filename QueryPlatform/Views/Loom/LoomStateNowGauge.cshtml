@@ -48,7 +48,7 @@
             $('#MachineNo').select2({ language: "zh-CN" });
             $.ajax({
                 type: 'post',
-                url: "@Url.Content("~/Query/GetLoomMachineNo")",
+                url: "@Url.Content("~/Loom/GetLoomMachineNo")",
                 data: {},
                 dataType: 'json',
                 success: function (result) {
@@ -207,7 +207,7 @@
                 if ($("#MachineNo").select2("val")) {
                     $.ajax({
                         type: 'post',
-                        url: "@Url.Content("~/Query/GetLoomStateNowGauge?iMachineID=")" + $("#MachineNo").select2("val"),
+                        url: "@Url.Content("~/Loom/GetLoomStateNowGauge?iMachineID=")" + $("#MachineNo").select2("val"),
                         data: {},
                         dataType: 'json',
                         async: false,
