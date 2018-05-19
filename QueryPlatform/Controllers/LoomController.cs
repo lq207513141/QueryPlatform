@@ -44,7 +44,7 @@ namespace MetronicTest.Controllers
         /// </summary>
         public JsonResult LoomStateNowQuery()
         {
-            string varCheck = Request.QueryString["query[varCheck]"]; 
+            string varCheck = Request.QueryString["query[varCheck]"];
             int machineVar = string.IsNullOrEmpty(varCheck) ? 0 : Convert.ToInt32(varCheck);
             //json结果
             JsonResult result = new JsonResult();
@@ -147,9 +147,7 @@ namespace MetronicTest.Controllers
         public JsonResult GetLoomPie1()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().GetLoomPie1();
+            List<IntData> list = new LoomDAL().GetLoomPie1();
             //写入结果
             result.Data = list;
             return result;
@@ -161,9 +159,7 @@ namespace MetronicTest.Controllers
         public JsonResult GetLoomPie2()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().GetLoomPie2();
+            List<IntData> list = new LoomDAL().GetLoomPie2();
             //写入结果
             result.Data = list;
             return result;
@@ -175,9 +171,7 @@ namespace MetronicTest.Controllers
         public JsonResult GetLoomPie3()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().GetLoomPie3();
+            List<IntData> list = new LoomDAL().GetLoomPie3();
             //写入结果
             result.Data = list;
             return result;
@@ -189,9 +183,7 @@ namespace MetronicTest.Controllers
         public JsonResult GetLoomPie4()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().GetLoomPie4();
+            List<IntData> list = new LoomDAL().GetLoomPie4();
             //写入结果
             result.Data = list;
             return result;
@@ -203,9 +195,7 @@ namespace MetronicTest.Controllers
         public JsonResult LoomAnalysisPie1()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().LoomAnalysisPie1();
+            List<IntData> list = new LoomDAL().LoomAnalysisPie1();
             //写入结果
             result.Data = list;
             return result;
@@ -217,11 +207,74 @@ namespace MetronicTest.Controllers
         public JsonResult LoomAnalysisPie2()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().LoomAnalysisPie2();
+            List<IntData> list = new LoomDAL().LoomAnalysisPie2();
             //写入结果
             result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停机频繁机台，各状态停机次数
+        /// </summary>
+        public JsonResult LoomAnalysisPie3()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().LoomAnalysisPie3();
+            List<BarData> list = new List<BarData>();
+
+            list.Add(SetBarData("纬停", "iStatusCount1", data));
+            list.Add(SetBarData("经停", "iStatusCount2", data));
+            list.Add(SetBarData("绞边停", "iStatusCount3", data));
+            list.Add(SetBarData("耳丝停", "iStatusCount4", data));
+            list.Add(SetBarData("离线", "iStatusCount9", data));
+            list.Add(SetBarData("其他停", "iStatusCount10", data));
+
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        private BarData SetBarData(string name, string value, DataTable data)
+        {
+            BarData bardata = new BarData()
+            {
+                name = name,
+                type = "bar",
+                stack = "总量",
+                label = new Lable { normal = new Normal { show = true, position = "insideRight" } }
+            };
+            int[] array = new int[data.Rows.Count];
+            int i = 0;
+            //获取明细数据
+            foreach (DataRow row in data.Rows)
+            {
+                array[i] = (int)row[value];
+                i++;
+            }
+            //明细赋值
+            bardata.data = array;
+            return bardata;
+        }
+
+
+
+        /// <summary>
+        /// 获取停机频繁机台，机台号
+        /// </summary>
+        public JsonResult LoomAnalysisPie3Title()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().LoomAnalysisPie3();
+            object[] List = new object[data.Rows.Count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["iAllStopCount"], (string)row["iMachineID"] };
+                i++;
+            }
+
+            //写入结果
+            result.Data = List;
             return result;
         }
 
@@ -231,9 +284,7 @@ namespace MetronicTest.Controllers
         public JsonResult LoomAnalysisPie4()
         {
             JsonResult result = new JsonResult();
-
-            //获取类型名称和明细个数
-            List<PieData> list = new LoomDAL().LoomAnalysisPie4();
+            List<DecimalData> list = new LoomDAL().LoomAnalysisPie4();
             //写入结果
             result.Data = list;
             return result;

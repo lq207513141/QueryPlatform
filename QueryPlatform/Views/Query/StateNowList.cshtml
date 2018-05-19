@@ -1,0 +1,202 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section pagePluginsCSS{
+
+}
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <i class="m-nav__link-icon la la-sitemap"></i> 设备实时状态列表查询
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Search Form -->
+            @Html.Hidden("iMachineGroupID", (string)ViewBag.iMachineGroupID)
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-form__group m-form__group--inline">
+                                    <div class="m-form__label">
+
+                                    </div>
+                                    <div class="m-form__control">
+                                        <select class="form-control m-select2" id="MachineType">
+                                            <option value="">=请选择=</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="m-form__group m-form__group--inline">
+                                    <div class="m-form__label">
+
+                                    </div>
+                                    <div class="m-form__control">
+                                        <select class="form-control m-select2" id="m_form_status">
+                                            <option value="">全部状态</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="搜索..." id="generalSearch">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: Search Form -->
+            <!--begin: Datatable -->
+            <div class="m_datatable" id="json_data"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
+</div>
+
+@section pagePluginsScripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var options = {
+                // datasource definition
+                data: {
+                    type: 'remote',
+                    source: {
+                        read: {
+                            // sample GET method
+                            method: 'Get',
+                            url: "@Url.Content("~/Query/StateNowListQuery")",
+                            map: function (raw) {
+                                // sample data mapping
+                                var dataSet = raw;
+                                if (typeof raw.data !== 'undefined') {
+                                    dataSet = raw.data;
+                                }
+                                return dataSet;
+                            },
+                        },
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                },
+                // layout definition
+                layout: {
+                    theme: 'default', // datatable theme
+                    class: '', // custom wrapper class
+                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                    footer: false // display/hide footer
+                },
+                // column sorting
+                sortable: true,
+                pagination: false,
+                search: {
+                    input: $('#generalSearch')
+                },
+                // columns definition
+                columns: [{
+                    field: "iMachineID",
+                    title: "机台",
+                    width: 125,
+                    template: function (row) {
+                        var status = {
+                            0: { 'title': '运行', 'class': 'btn-success' },
+                            1: { 'title': '暂停', 'class': 'btn-danger' },
+                            2: { 'title': '复位', 'class': 'btn-yellow' },
+                            3: { 'title': '断纱', 'class': 'btn-warning' },
+                            9: { 'title': '离线', 'class': 'btn-outline-metal active' },
+                        };
+                        return '<button type="button" class="btn m-btn--pill ' + status[row.iStatusID1].class + ' m-btn m-btn--custom">机台：<b>' + row.iMachineID +'</b><br/>状态：'+status[row.iStatusID1].title + '</button >';
+                        //return '<span class="m-badge ' + status[row.Status].class + ' m-badge--wide">' + status[row.Status].title + '</span>';
+                    },
+                },{
+                        field: "iStatusID",
+                        title: "信息",
+                        sortable: false,
+                        template:'车速1：{{nSpeed1}}<br/>效率1：{{nEfficiency1}}%<br/>车速2：{{nSpeed2}}<br/>效率2：{{nEfficiency2}}%',
+                },
+                //{
+                //    field: "sBancieff",
+                //    title: "班次效率",
+                //}, {
+                //    field: "nBanciSpeed",
+                //    title: "班次车速",
+                //}, {
+                //    field: "iPickCount",
+                //    title: "打纬数",
+                //},{
+                //    field: "sRunTime",
+                //    title: "运行时间",
+                //},  {
+                //    field: "sAllStopTime",
+                //    title: "停机时间",
+                //},
+                ]
+            };
+            var datatable = $('.m_datatable').mDatatable(options);
+
+            $('#m_form_status').select2({ language: "zh-CN" });
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/GetState")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("#m_form_status").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
+
+           $('#MachineType').select2({ language: "zh-CN" });
+           $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Query/QueryMachineType")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("#MachineType").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                    if ($('#iMachineGroupID').val()) {
+                        $('#MachineType').val($('#iMachineGroupID').val()).select2();
+                        $('#MachineType').change();
+                        $('#MachineType').prop('disabled', true);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
+            var query = datatable.getDataSourceQuery();
+
+            $('#m_form_status').on('change', function () {
+                datatable.search($(this).val(), 'Status');
+            }).val(typeof query.Status !== 'undefined' ? query.Status : '');
+
+            $('#MachineType').on('change', function () {
+                datatable.search($(this).val(), 'iMachineGroupId');
+            }).val(typeof query.iMachineGroupId !== 'undefined' ? query.iMachineGroupId : '');
+        });
+    </script>
+}

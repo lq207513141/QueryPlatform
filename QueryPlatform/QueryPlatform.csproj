@@ -455,6 +455,7 @@
     <Content Include="Views\Loom\LoomStateNowPie.cshtml" />
     <Content Include="Views\Loom\LoomStateNowGauge.cshtml" />
     <Content Include="Views\Loom\LoomAnalysisPie.cshtml" />
+    <Content Include="Views\Query\StateNowList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

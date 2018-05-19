@@ -49,10 +49,10 @@ GROUP BY C.iaddress,C.saddress", machineType);
         /// <summary>
         /// 获取参数名称和明细个数
         /// </summary>
-        public DataTable GetMachineVarAndCount(string MachineNo, string MachineVar, string MachineType, string TimeStart, string TimeEnd)
+        public DataTable GetMachineVar(string MachineNo, string MachineVar, string MachineType, string TimeStart, string TimeEnd)
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT A.saddressName,count=COUNT(1)
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT A.saddressName
 FROM dbo.OpprotocolValue A(NOLOCK)
 WHERE A.iMachineGroupID=:MachineType
 AND A.iMachineID=:MachineNo
@@ -73,8 +73,43 @@ FROM dbo.OpprotocolValue A(NOLOCK)
 WHERE A.iMachineGroupID=:MachineType
 AND A.iMachineID=:MachineNo
 AND A.iaddress=:MachineVar
-AND A.tCreateTime>=:TimeStart AND A.tCreateTime<=:TimeEnd", MachineType, MachineNo, MachineVar, TimeStart, TimeEnd);
+AND A.tCreateTime>=:TimeStart AND A.tCreateTime<=:TimeEnd
+ORDER BY A.tCreateTime", MachineType, MachineNo, MachineVar, TimeStart, TimeEnd);
             return data;
+        }
+
+        /// <summary>
+        /// 获取设备状态
+        /// </summary>
+        public DataTable GetState()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iStatusID,sStatusType FROM dbo.OpStatusType_yarn(NOLOCK)");
+            return data;
+        }
+
+        /// <summary>
+        /// 获取设备实时数据
+        /// </summary>
+        /// <returns></returns>
+        public List<Machine> GetStateNowListQuery(string query, string iMachineGroupID, string status, string field, string sort)
+        {
+            //拼接where条件
+            string where = " WHERE A.iMachineGroupID=" + iMachineGroupID;
+            if (!String.IsNullOrEmpty(query))
+                where += " AND A.iMachineID=" + query;
+            if (!String.IsNullOrEmpty(status))
+                where += " AND A.iStatusID1=" + status;
+            //拼接排序
+            string order = "";
+            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort) && field == "iMachineID")
+                order = " ORDER BY " + field + " " + sort;
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT A.iMachineID,A.iStatusID1,A.iStatusID2,A.sWorkName,A.sTaskNo1
+,A.sTaskNo2,A.nSpeed1,A.nSpeed2,A.nEfficiency1,A.nEfficiency2 
+FROM dbo.psYarnMachine A(NOLOCK)" + where + order);
+            List<Machine> list = TableListChange.TableToList<Machine>(data);
+            return list;
         }
     }
 }

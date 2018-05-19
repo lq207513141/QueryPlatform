@@ -5,9 +5,9 @@ using System.Web;
 
 namespace QueryPlatform.Core.Model
 {
-    public class PieData
+    public class Normal
     {
-        public string name { get; set; }
-        public int value { get; set; }
+        public bool show { get; set; }
+        public string position { get; set; }
     }
 }

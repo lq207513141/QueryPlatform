@@ -50,7 +50,7 @@
                     </label>
                     <div class="col-md-2">
                         <div class="input-group date">
-                            <input type="text" class="form-control m-input" readonly value="2018-05-10 00:00" id="TimeStart" />
+                            <input type="text" class="form-control m-input" readonly id="TimeStart" />
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar glyphicon-th"></i>
@@ -63,7 +63,7 @@
                     </label>
                     <div class="col-md-2">
                         <div class="input-group date">
-                            <input type="text" class="form-control m-input" readonly value="2018-05-10 12:00" id="TimeEnd" />
+                            <input type="text" class="form-control m-input" readonly id="TimeEnd" />
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar glyphicon-th"></i>
@@ -109,6 +109,7 @@
                 format: 'yyyy-mm-dd hh:ii',
                 language: 'zh-CN'
             });
+
             //下拉框
             $('#MachineType').select2({ language: "zh-CN" });
             $('#MachineNo').select2({ language: "zh-CN" });
@@ -123,7 +124,8 @@
                         $("#MachineType").append($('<option></option>').val(result[i][0]).text(result[i][1]));
                     }
                     if ($('#iMachineGroupID').val()) {
-                        $('#MachineType').select2('val', $('#iMachineGroupID').val());
+                        $('#MachineType').val($('#iMachineGroupID').val()).select2();
+                        $('#MachineType').change();
                         $('#MachineType').prop('disabled', true);
                     }
                 },
@@ -233,16 +235,18 @@
                         // 获取json值
                         option.series = result;
                         var data = option.series;
-                        for (var i in data) {
-                            //生成线标题
-                            option.legend.data.push(data[i].name);
-                        }
-                        // 为echarts对象加载数据
-                        myChart.setOption(option);
+                        if (data) {
+                            for (var i in data) {
+                                //生成线标题
+                                option.legend.data.push(data[i].name);
+                            }
+                            // 为echarts对象加载数据
+                            myChart.setOption(option);
+                        }  
                     }
                     else {
                         // 为echarts对象加载数据
-                        myChart.setOption(option);
+                        //myChart.setOption(option);
                     }
                 },
                 error: function (XMLHttpRequest) {
@@ -287,18 +291,24 @@
                     url: url,
                     data: {},
                     dataType: 'json',
+                    async: false,
                     success: function (result) {
-                        if (result) {
+                        if (result && result.length>0) {
                             // 获取json值
                             option.series = result;
                             var data = option.series;
-                            var legend;
-                            option.legend.data = [];
-                            for (var i in data) {
-                                option.legend.data.push(data[i].name);
+                            if (data) {
+                                option.legend.data = [];
+                                for (var i in data) {
+                                    option.legend.data.push(data[i].name);
+                                }
+                                // 为echarts对象加载数据
+                                myChart.setOption(option, true);
                             }
-                            // 为echarts对象加载数据
-                            myChart.setOption(option, true);
+                            else {
+                                //没有返回结果时，清空画布
+                                myChart.clear();
+                            }
                         }
                         else {
                             //没有返回结果时，清空画布

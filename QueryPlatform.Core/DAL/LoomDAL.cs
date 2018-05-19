@@ -40,12 +40,12 @@ namespace QueryPlatform.Core.DAL
                 }
                 else
                 {
-                    where+= " AND C.iStatusID=" + status;
+                    where += " AND C.iStatusID=" + status;
                 }
             }
             //拼接排序
             string order = "";
-            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort)&& field== "iMachineID")
+            if (!String.IsNullOrEmpty(field) && !String.IsNullOrEmpty(sort) && field == "iMachineID")
                 order = " ORDER BY " + field + " " + sort;
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT X.iMachineID,X.iPickCount
@@ -81,7 +81,7 @@ LEFT JOIN dbo.vwMachineMap C(NOLOCK) ON C.iMachineID=X.iMachineID" + where + ord
         /// 获取停机情况
         /// </summary>
         /// <returns></returns>
-        public List<PieData> GetLoomPie1()
+        public List<IntData> GetLoomPie1()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT value=COUNT(1),name='运转'
@@ -93,7 +93,7 @@ SELECT count = COUNT(1), name = '停台'
 FROM dbo.OpMachine A(NOLOCK)
 JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
 WHERE B.iStatusID <> 0");
-            List<PieData> list = TableListChange.TableToList<PieData>(data);
+            List<IntData> list = TableListChange.TableToList<IntData>(data);
             return list;
         }
 
@@ -101,16 +101,16 @@ WHERE B.iStatusID <> 0");
         /// 获取停机明细
         /// </summary>
         /// <returns></returns>
-        public List<PieData> GetLoomPie2()
+        public List<IntData> GetLoomPie2()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzAnalyBanGetMacStatus @iDeptID = 'ALL'");
-            List <PieData> list = new List<PieData>();
+            List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                if((int)row["bGroup"] ==0)
+                if ((int)row["bGroup"] == 0)
                 {
-                    list.Add(new PieData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
+                    list.Add(new IntData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
                 }
             }
             return list;
@@ -120,14 +120,14 @@ WHERE B.iStatusID <> 0");
         /// 获取效率情况
         /// </summary>
         /// <returns></returns>
-        public List<PieData> GetLoomPie3()
+        public List<IntData> GetLoomPie3()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzAnalyBanGetefficiencyFendang @iDeptID = 'ALL',@iClassListID = 'NOW'");
-            List<PieData> list = new List<PieData>();
+            List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new PieData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
+                list.Add(new IntData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
             }
             return list;
         }
@@ -136,14 +136,14 @@ WHERE B.iStatusID <> 0");
         /// 获取车速情况
         /// </summary>
         /// <returns></returns>
-        public List<PieData> GetLoomPie4()
+        public List<IntData> GetLoomPie4()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC spzzAnalyBanGetnSpeedFendang @iDeptID='ALL'");
-            List<PieData> list = new List<PieData>();
+            List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new PieData { value=(int)row["iMacNum"], name=(string)row["sStatusType"] });
+                list.Add(new IntData { value = (int)row["iMacNum"], name = (string)row["sStatusType"] });
             }
             return list;
         }
@@ -152,14 +152,14 @@ WHERE B.iStatusID <> 0");
         /// 获取停台次数分析
         /// </summary>
         /// <returns></returns>
-        public List<PieData> LoomAnalysisPie1()
+        public List<IntData> LoomAnalysisPie1()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC  [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
-            List<PieData> list = new List<PieData>();
+            List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new PieData { value = (int)row["iStatusCount"], name = (string)row["sStatusType"] });
+                list.Add(new IntData { value = (int)row["iStatusCount"], name = (string)row["sStatusType"] });
             }
             return list;
         }
@@ -168,30 +168,49 @@ WHERE B.iStatusID <> 0");
         /// 获取停台时间分析
         /// </summary>
         /// <returns></returns>
-        public List<PieData> LoomAnalysisPie2()
+        public List<IntData> LoomAnalysisPie2()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC  [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
-            List<PieData> list = new List<PieData>();
+            List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new PieData { value = Convert.ToInt32((decimal)row["iStatusTime"]/60), name = (string)row["sStatusType"] });
+                list.Add(new IntData { value = Convert.ToInt32((decimal)row["iStatusTime"] / 60), name = (string)row["sStatusType"] });
             }
             return list;
+        }
+
+        /// <summary>
+        /// 获取停机频繁机台
+        /// </summary>
+        /// <returns></returns>
+        public DataTable LoomAnalysisPie3()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyBanGetMacOpClassDataList] @iDeptID='ALL',@iClassListID='NOW'");
+            DataTable result = new DataTable();
+            //克隆结构
+            result = data.Clone();
+            //取前十条
+            for (int i = 0; i < 5; i++)
+            {
+                result.Rows.Add(data.Rows[i].ItemArray);
+            }
+            return result;
         }
 
         /// <summary>
         /// 获取低效率机台
         /// </summary>
         /// <returns></returns>
-        public List<PieData> LoomAnalysisPie4()
+        public List<DecimalData> LoomAnalysisPie4()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyBanGetMacefficiencyLow] @iDeptID='ALL',@iClassListID='NOW'");
-            List<PieData> list = new List<PieData>();
+            List<DecimalData> list = new List<DecimalData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new PieData { value = (int)row["iMachineID"], name = Convert.ToString((decimal)row["nfficiency"]) });
+                list.Add(new DecimalData { value = (decimal)row["nefficiency"], name = (string)row["iMachineID"] });
             }
             return list;
         }

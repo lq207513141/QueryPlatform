@@ -25,6 +25,12 @@ namespace MetronicTest.Controllers
             return View();
         }
 
+        public ActionResult StateNowList(string iMachineGroupID)
+        {
+            ViewBag.iMachineGroupID = iMachineGroupID;
+            return View();
+        }
+
         /// <summary>
         /// 获取tables
         /// </summary>
@@ -150,12 +156,14 @@ namespace MetronicTest.Controllers
             for (int j = 0; j < MachineVarList.Length; j++)
             {
                 //获取类型名称和明细个数
-                DataTable data1 = new YarnMachineDAL().GetMachineVarAndCount(MachineNo, MachineVarList[j], MachineType, TimeStart, TimeEnd);
+                DataTable data1 = new YarnMachineDAL().GetMachineVar(MachineNo, MachineVarList[j], MachineType, TimeStart, TimeEnd);
                 if (data1.Rows.Count == 0)
                 {
                     continue;
                 }
-                int count = (int)data1.Rows[0]["count"];
+                //获取明细数据
+                DataTable data2 = new YarnMachineDAL().GetMachineVarList(MachineNo, MachineVarList[j], MachineType, TimeStart, TimeEnd); 
+                int count = data2.Rows.Count;
                 //根据数量定义数组个数
                 object[] List2 = new object[count];
                 //对象赋值
@@ -168,8 +176,7 @@ namespace MetronicTest.Controllers
                     symbolSize = 2
                 };
                 int i = 0;
-                //获取明细数据
-                DataTable data2 = new YarnMachineDAL().GetMachineVarList(MachineNo, MachineVarList[j], MachineType, TimeStart, TimeEnd);
+                //明细数据处理
                 foreach (DataRow row2 in data2.Rows)
                 {
                     DateTime time = (DateTime)row2["tCreateTime"];
@@ -182,6 +189,55 @@ namespace MetronicTest.Controllers
             }
             //写入结果
             result.Data = list1;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取状态类型
+        /// </summary>
+        public JsonResult GetState()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new YarnMachineDAL().GetState();
+            int count = data.Rows.Count;
+            object[] List = new object[count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["iStatusID"], (string)row["sStatusType"] };
+                i++;
+            }
+            result.Data = List;
+            return result;
+        }
+
+        /// <summary>
+        /// 设备实时状态列表查询
+        /// </summary>
+        public JsonResult StateNowListQuery()
+        {
+            //json结果
+            JsonResult result = new JsonResult();
+            //获取设备类型
+            string iMachineGroupID = Request.QueryString["query[iMachineGroupID]"];
+            if (String.IsNullOrEmpty(iMachineGroupID))
+                return result;
+            //获取查询
+            string query = Request.QueryString["query[generalSearch]"];
+            //获取状态
+            string status = Request.QueryString["query[Status]"];
+            //获取排序
+            string field = Request.QueryString["sort[field]"];
+            string sort = Request.QueryString["sort[sort]"];
+            
+            //json.data
+            AjaxTablePageData<Machine> pageData = new AjaxTablePageData<Machine>();
+            //根据当前页和行数，获取数据集
+            List<Machine> list = new YarnMachineDAL().GetStateNowListQuery(query, iMachineGroupID, status, field, sort);
+            pageData.data = list;
+            //允许get
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = pageData;
             return result;
         }
     }
