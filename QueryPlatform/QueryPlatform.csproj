@@ -153,6 +153,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoomController.cs" />
+    <Compile Include="Controllers\BeamLibraryController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -456,6 +457,8 @@
     <Content Include="Views\Loom\LoomStateNowGauge.cshtml" />
     <Content Include="Views\Loom\LoomAnalysisPie.cshtml" />
     <Content Include="Views\Query\StateNowList.cshtml" />
+    <Content Include="Views\BeamLibrary\Query.cshtml" />
+    <Content Include="Views\BeamLibrary\CountQuery.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

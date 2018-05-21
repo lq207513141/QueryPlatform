@@ -82,11 +82,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\BeamLibraryDAL.cs" />
     <Compile Include="DAL\YarnMachineDAL.cs" />
     <Compile Include="DAL\LoomDAL.cs" />
     <Compile Include="DAL\OpMachineDAL.cs" />
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\TableListChange.cs" />
+    <Compile Include="Model\BeamLibraryCount.cs" />
+    <Compile Include="Model\BeamLibrary.cs" />
     <Compile Include="Model\Machine.cs" />
     <Compile Include="Model\Normal.cs" />
     <Compile Include="Model\Lable.cs" />
