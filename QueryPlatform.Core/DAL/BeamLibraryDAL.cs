@@ -48,6 +48,10 @@ ORDER BY sMaterialNo");
                     order = " ORDER BY " + field + " " + sort;
                 }
             }
+            else
+            {
+                order = " ORDER BY CONVERT(INT,kuwei) asc";
+            }
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT A.*
 FROM dbo.vwZhouKu A(NOLOCK) 

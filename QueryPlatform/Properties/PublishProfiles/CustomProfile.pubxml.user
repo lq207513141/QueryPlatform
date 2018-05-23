@@ -752,19 +752,19 @@
       <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>05/19/2018 15:06:44</publishTime>
+      <publishTime>05/22/2018 17:22:52</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
       <publishTime>05/10/2018 08:57:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>05/19/2018 15:06:44</publishTime>
+      <publishTime>05/22/2018 17:22:52</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>05/19/2018 15:06:49</publishTime>
+      <publishTime>05/22/2018 17:22:57</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>05/19/2018 15:06:49</publishTime>
+      <publishTime>05/22/2018 17:22:57</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -934,11 +934,17 @@
     <File Include="plug-ins/jquery.min.js">
       <publishTime>05/03/2018 10:59:44</publishTime>
     </File>
+    <File Include="Views/BeamLibrary/CountQuery.cshtml">
+      <publishTime>05/22/2018 08:23:38</publishTime>
+    </File>
+    <File Include="Views/BeamLibrary/Query.cshtml">
+      <publishTime>05/22/2018 08:25:43</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Loom/LoomAnalysisPie.cshtml">
-      <publishTime>05/18/2018 10:49:46</publishTime>
+      <publishTime>05/22/2018 09:05:08</publishTime>
     </File>
     <File Include="Views/Loom/LoomStateNow.cshtml">
       <publishTime>05/16/2018 08:42:11</publishTime>
@@ -977,7 +983,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/19/2018 13:59:47</publishTime>
+      <publishTime>05/21/2018 13:26:14</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/04/2018 10:24:50</publishTime>

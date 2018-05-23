@@ -84,7 +84,8 @@ LEFT JOIN dbo.vwMachineMap C(NOLOCK) ON C.iMachineID=X.iMachineID" + where + ord
         public List<IntData> GetLoomPie1()
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT value=COUNT(1),name='运转'
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT * FROM
+(SELECT value=COUNT(1),name='运转'
 FROM dbo.OpMachine A(NOLOCK)
 JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
 WHERE B.iStatusID = 0
@@ -92,7 +93,8 @@ UNION
 SELECT count = COUNT(1), name = '停台'
 FROM dbo.OpMachine A(NOLOCK)
 JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
-WHERE B.iStatusID <> 0");
+WHERE B.iStatusID <> 0) X
+ORDER BY X.name DESC");
             List<IntData> list = TableListChange.TableToList<IntData>(data);
             return list;
         }
