@@ -1,0 +1,558 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section pagePluginsCSS{
+
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        织机情况统计
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--primary" role="tablist">
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_1" role="tab">
+                        <i class="fa fa-pie-chart"></i>
+                        设备
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_2" role="tab">
+                        <i class="fa fa-line-chart"></i>
+                        产量
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_3" role="tab">
+                        <i class="fa fa-bar-chart"></i>
+                        效率
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_1" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            实时停机情况
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie1" class="form-group m-form__group row col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            实时停台明细
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie2" class="form-group m-form__group row col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_2" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            产量月报
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1 offset-1">
+                                        月份:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="MonthTime1" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="containerBar1" class="form-group m-form__group row col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>                   
+                </div>
+                <div class="tab-pane" id="m_tabs_3" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            效率月报
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1 offset-1">
+                                        月份:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="MonthTime2" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="containerBar2" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pagePluginsScripts{
+    <!--echarts插件引入-->
+    <script src="~/plug-ins/echarts/echarts.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var maincontainerBar1 = document.getElementById('containerBar1');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerBar1() {
+                maincontainerBar1.style.width = window.innerWidth*0.7 + 'px';
+                maincontainerBar1.style.height = '500px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerBar1();
+            // 初始化图表
+            var mainChart1 = echarts.init(maincontainerBar1);
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChart1.resize();
+            });
+
+            var maincontainerBar2 = document.getElementById('containerBar2');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerBar2() {
+                maincontainerBar2.style.width = window.innerWidth*0.7 + 'px';
+                maincontainerBar2.style.height = '500px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerBar2();
+            // 初始化图表
+            var mainChart2 = echarts.init(maincontainerBar2);
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChart2.resize();
+            });
+
+            var domPie1 = document.getElementById("containerPie1");
+            var myChartPie1 = echarts.init(domPie1, 'light');
+            var optionPie1 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}:{c}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['LightGreen', 'LightSalmon']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie1")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie1.series[0].data = result;
+                        for (var i in result) {
+                            optionPie1.legend.data.push(result[i].name); 
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie1.setOption(optionPie1);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie1.setOption(optionPie1);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            }); 
+
+            //container2
+            var domPie2 = document.getElementById("containerPie2");
+            var myChartPie2 = echarts.init(domPie2, 'light');
+            var optionPie2 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie2")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie2.series[0].data = result;
+                        for (var i in result) {
+                            optionPie2.legend.data.push(result[i].name); 
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie2.setOption(optionPie2);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie2.setOption(optionPie2);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            }); 
+
+            //时间
+            $('#MonthTime1').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm',
+                language: 'zh-CN',
+                startView: 'year',
+                minView: 'year',
+                maxView: 'decade',
+            });
+            $('#MonthTime2').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm',
+                language: 'zh-CN',
+                startView: 'year',
+                minView: 'year',
+                maxView: 'decade',
+            });
+            var date = new Date;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            month = (month < 10 ? "0" + month : month);
+            var mydate = (year.toString()+'-'+month.toString());
+            $('#MonthTime1').val(mydate);
+            $('#MonthTime2').val(mydate);
+
+            //containerBar1
+            var dom1 = document.getElementById("containerBar1");
+            var myChart1 = echarts.init(dom1, 'light');
+            var option1 = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        magicType: { show: true, type: ['bar','line'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: [],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '产量(米)',
+                        type: 'line',
+                        barWidth: '60%',
+                        data: []
+                    }
+                ]
+            };
+
+            DayAnalysis1();
+
+            //containerBar2
+            var dom2 = document.getElementById("containerBar2");
+            var myChart2 = echarts.init(dom2, 'light');
+            var option2 = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        magicType: { show: true, type: ['bar', 'line'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: [],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '效率(%)',
+                        type: 'line',
+                        barWidth: '60%',
+                        data: []
+                    }
+                ]
+            };
+
+            DayAnalysis2();
+
+            //查询
+            $('#MonthTime1').change(function () {
+                if (!$('#MonthTime1').val()) {
+                    alert("请选择时间后再操作");
+                    return;
+                }
+                DayAnalysis1();
+            });
+            $('#MonthTime2').change(function () {
+                if (!$('#MonthTime2').val()) {
+                    alert("请选择时间后再操作");
+                    return;
+                }
+                DayAnalysis2();
+            });
+
+        function DayAnalysis1() {
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/DayAnalysis1?time=")" + $('#MonthTime1').val(),
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        option1.xAxis[0].data = [];
+                        option1.series[0].data = [];
+                        for (var i in result) {
+                            option1.xAxis[0].data.push(result[i].name);
+                            option1.series[0].data.push(result[i].value);
+                        }
+                        // 为echarts对象加载数据
+                        myChart1.setOption(option1);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChart1.setOption(option1);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+        }
+        function DayAnalysis2() {
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/DayAnalysis2?time=")" + $('#MonthTime2').val(),
+                data: {},
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    if (result) {
+                            option2.xAxis[0].data = [];
+                            option2.series[0].data = [];
+                            for (var i in result) {
+                                option2.xAxis[0].data.push(result[i].name);
+                                option2.series[0].data.push(result[i].value);
+                            }
+                            // 为echarts对象加载数据
+                            myChart2.setOption(option2);
+                        }
+                        else {
+                            // 为echarts对象加载数据
+                            myChart2.setOption(option2);
+                        }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+         }
+        });
+
+    </script>
+}

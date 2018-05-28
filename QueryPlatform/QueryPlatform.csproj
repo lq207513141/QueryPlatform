@@ -459,6 +459,7 @@
     <Content Include="Views\Query\StateNowList.cshtml" />
     <Content Include="Views\BeamLibrary\Query.cshtml" />
     <Content Include="Views\BeamLibrary\CountQuery.cshtml" />
+    <Content Include="Views\Loom\DayAnalysis.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

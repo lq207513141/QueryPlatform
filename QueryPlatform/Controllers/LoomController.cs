@@ -24,6 +24,11 @@ namespace MetronicTest.Controllers
             return View();
         }
 
+        public ActionResult DayAnalysis()
+        {
+            return View();
+        }
+
         public ActionResult LoomStateNow()
         {
             return View();
@@ -285,6 +290,38 @@ namespace MetronicTest.Controllers
         {
             JsonResult result = new JsonResult();
             List<DecimalData> list = new LoomDAL().LoomAnalysisPie4();
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取设备产量月报
+        /// </summary>
+        public JsonResult DayAnalysis1(string time)
+        {
+            JsonResult result = new JsonResult();
+            if(String.IsNullOrEmpty(time))
+            {
+                return result;
+            }
+            List<DecimalData> list = new LoomDAL().DayAnalysis1(time);
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取设备产量月报
+        /// </summary>
+        public JsonResult DayAnalysis2(string time)
+        {
+            JsonResult result = new JsonResult();
+            if (String.IsNullOrEmpty(time))
+            {
+                return result;
+            }
+            List<DecimalData> list = new LoomDAL().DayAnalysis2(time);
             //写入结果
             result.Data = list;
             return result;

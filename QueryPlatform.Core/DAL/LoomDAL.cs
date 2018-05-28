@@ -218,6 +218,42 @@ ORDER BY X.name DESC");
         }
 
         /// <summary>
+        /// 获取产量月报
+        /// </summary>
+        /// <returns></returns>
+        public List<DecimalData> DayAnalysis1(string time)
+        {
+            string start = time + "-01";
+            string end = Convert.ToString(Convert.ToDateTime(start).AddMonths(1).AddDays(-1));
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzReportfmProductDaySumReport @iDeptID=1,@tClassDate1=:start,@tClassDate2=:end",start,end);
+            List<DecimalData> list = new List<DecimalData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new DecimalData { value = (decimal)row["nLength"], name = (string)row["tClassDate"] });
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取产量月报
+        /// </summary>
+        /// <returns></returns>
+        public List<DecimalData> DayAnalysis2(string time)
+        {
+            string start = time + "-01";
+            string end = Convert.ToString(Convert.ToDateTime(start).AddMonths(1).AddDays(-1));
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC dbo.spzzReportfmProductDaySumReport @iDeptID=1,@tClassDate1=:start,@tClassDate2=:end", start, end);
+            List<DecimalData> list = new List<DecimalData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new DecimalData { value = (decimal)row["nbancieff"], name = (string)row["tClassDate"] });
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 获取织机机台号
         /// </summary>
         public DataTable GetLoomMachineNo()
