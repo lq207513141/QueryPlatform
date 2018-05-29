@@ -48,7 +48,7 @@
                                             <i class="la la-gear"></i>
                                         </span>
                                         <h3 class="m-portlet__head-text">
-                                            实时停机情况
+                                            实时停台情况
                                         </h3>
                                     </div>
                                 </div>
@@ -72,6 +72,40 @@
                             </div>
                             <div class="m-portlet__body">
                                 <div id="containerPie2" class="form-group m-form__group row col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            当班停台次数
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie3" class="form-group m-form__group row col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            当班停台时间
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie4" class="form-group m-form__group row col-md-12" style="height:500px"></div>
                             </div>
                             <!--end::Portlet-->
                         </div>
@@ -195,12 +229,13 @@
                 mainChart2.resize();
             });
 
+            //containerPie1
             var domPie1 = document.getElementById("containerPie1");
             var myChartPie1 = echarts.init(domPie1, 'light');
             var optionPie1 = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{a}<br/>{b}:{c}台({d}%)"
                 },
                 toolbox: {
                     show: true,
@@ -266,13 +301,13 @@
                 }
             }); 
 
-            //container2
+            //containerPie2
             var domPie2 = document.getElementById("containerPie2");
             var myChartPie2 = echarts.init(domPie2, 'light');
             var optionPie2 = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{a}<br/>{b}:{c}台({d}%)"
                 },
                 toolbox: {
                     show: true,
@@ -338,6 +373,151 @@
 
                 }
             }); 
+
+            //containerPie3
+            var domPie3 = document.getElementById("containerPie3");
+            var myChartPie3 = echarts.init(domPie3, 'light');
+            var optionPie3 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}次({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie1")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie3.series[0].data = result;
+                        for (var i in result) {
+                            optionPie3.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie3.setOption(optionPie3);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie3.setOption(optionPie3);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+            //containerPie4
+            var domPie4 = document.getElementById("containerPie4");
+            var myChartPie4 = echarts.init(domPie4, 'light');
+            var optionPie4 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}分钟({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie2")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie4.series[0].data = result;
+                        for (var i in result) {
+                            optionPie4.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie4.setOption(optionPie4);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie4.setOption(optionPie4);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
 
             //时间
             $('#MonthTime1').datetimepicker({

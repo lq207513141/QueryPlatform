@@ -35,7 +35,7 @@ namespace QueryPlatform.Core.Model
         /// </summary>
         public string sRunTime { get; set; }
         /// <summary>
-        /// 总停机时间
+        /// 总停台时间
         /// </summary>
         public string sAllStopTime { get; set; }
     }

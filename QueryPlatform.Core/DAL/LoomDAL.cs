@@ -78,7 +78,7 @@ LEFT JOIN dbo.vwMachineMap C(NOLOCK) ON C.iMachineID=X.iMachineID" + where + ord
         }
 
         /// <summary>
-        /// 获取停机情况
+        /// 获取停台情况
         /// </summary>
         /// <returns></returns>
         public List<IntData> GetLoomPie1()
@@ -100,7 +100,7 @@ ORDER BY X.name DESC");
         }
 
         /// <summary>
-        /// 获取停机明细
+        /// 获取停台明细
         /// </summary>
         /// <returns></returns>
         public List<IntData> GetLoomPie2()
@@ -183,7 +183,7 @@ ORDER BY X.name DESC");
         }
 
         /// <summary>
-        /// 获取停机频繁机台
+        /// 获取停台频繁机台
         /// </summary>
         /// <returns></returns>
         public DataTable LoomAnalysisPie3()
@@ -194,7 +194,7 @@ ORDER BY X.name DESC");
             //克隆结构
             result = data.Clone();
             //取前十条
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 result.Rows.Add(data.Rows[i].ItemArray);
             }

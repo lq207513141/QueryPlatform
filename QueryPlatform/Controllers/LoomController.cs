@@ -147,7 +147,7 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
-        /// 获取停机情况
+        /// 获取停台情况
         /// </summary>
         public JsonResult GetLoomPie1()
         {
@@ -159,7 +159,7 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
-        /// 获取停机明细
+        /// 获取停台明细
         /// </summary>
         public JsonResult GetLoomPie2()
         {
@@ -219,7 +219,7 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
-        /// 获取停机频繁机台，各状态停机次数
+        /// 获取停台频繁机台，各状态停台次数
         /// </summary>
         public JsonResult LoomAnalysisPie3()
         {
@@ -246,7 +246,7 @@ namespace MetronicTest.Controllers
                 name = name,
                 type = "bar",
                 stack = "总量",
-                label = new Lable { normal = new Normal { show = true, position = "insideRight" } }
+                label = new Lable { normal = new Normal { show = false, position = "insideRight" } }
             };
             int[] array = new int[data.Rows.Count];
             int i = 0;
@@ -264,7 +264,7 @@ namespace MetronicTest.Controllers
 
 
         /// <summary>
-        /// 获取停机频繁机台，机台号
+        /// 获取停台频繁机台，机台号
         /// </summary>
         public JsonResult LoomAnalysisPie3Title()
         {
