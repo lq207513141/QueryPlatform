@@ -24,8 +24,9 @@ namespace MetronicTest.Controllers
             return View();
         }
 
-        public ActionResult DayAnalysis()
+        public ActionResult LoomAnalysis()
         {
+            ViewBag.iClassId = new LoomDAL().GetClassNow();
             return View();
         }
 
@@ -42,6 +43,25 @@ namespace MetronicTest.Controllers
         public ActionResult LoomAnalysisPie()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 获取班次
+        /// </summary>
+        public JsonResult GetWorkTime()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().GetWorkTime();
+            int count = data.Rows.Count;
+            object[] List = new object[count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["value"], (string)row["text"] };
+                i++;
+            }
+            result.Data = List;
+            return result;
         }
 
         /// <summary>
@@ -207,6 +227,18 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
+        /// 获取停台次数分析
+        /// </summary>
+        public JsonResult LoomAnalysisPie1_1(string time,string sClassName)
+        {
+            JsonResult result = new JsonResult();
+            List<IntData> list = new LoomDAL().LoomAnalysisPie1_1(time,sClassName);
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
         /// 获取停台时间分析
         /// </summary>
         public JsonResult LoomAnalysisPie2()
@@ -219,12 +251,24 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
+        /// 获取停台时间分析
+        /// </summary>
+        public JsonResult LoomAnalysisPie2_1(string time, string sClassName)
+        {
+            JsonResult result = new JsonResult();
+            List<IntData> list = new LoomDAL().LoomAnalysisPie2_1(time,sClassName);
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
         /// 获取停台频繁机台，各状态停台次数
         /// </summary>
         public JsonResult LoomAnalysisPie3()
         {
             JsonResult result = new JsonResult();
-            DataTable data = new LoomDAL().LoomAnalysisPie3();
+            DataTable data = new LoomDAL().LoomAnalysisPie3("iAllStopCount");
             List<BarData> list = new List<BarData>();
 
             list.Add(SetBarData("纬停", "iStatusCount1", data));
@@ -233,6 +277,27 @@ namespace MetronicTest.Controllers
             list.Add(SetBarData("耳丝停", "iStatusCount4", data));
             list.Add(SetBarData("离线", "iStatusCount9", data));
             list.Add(SetBarData("其他停", "iStatusCount10", data));
+
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停台频繁机台，各状态停台次数
+        /// </summary>
+        public JsonResult LoomAnalysisPie3_1()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().LoomAnalysisPie3("iAllStopTime");
+            List<BarData> list = new List<BarData>();
+
+            list.Add(SetBarData("纬停", "iStatusTime1", data));
+            list.Add(SetBarData("经停", "iStatusTime2", data));
+            list.Add(SetBarData("绞边停", "iStatusTime3", data));
+            list.Add(SetBarData("耳丝停", "iStatusTime4", data));
+            list.Add(SetBarData("离线", "iStatusTime9", data));
+            list.Add(SetBarData("其他停", "iStatusTime10", data));
 
             //写入结果
             result.Data = list;
@@ -269,12 +334,32 @@ namespace MetronicTest.Controllers
         public JsonResult LoomAnalysisPie3Title()
         {
             JsonResult result = new JsonResult();
-            DataTable data = new LoomDAL().LoomAnalysisPie3();
+            DataTable data = new LoomDAL().LoomAnalysisPie3("iAllStopCount");
             object[] List = new object[data.Rows.Count];
             int i = 0;
             foreach (DataRow row in data.Rows)
             {
                 List[i] = new object[] { (int)row["iAllStopCount"], (string)row["iMachineID"] };
+                i++;
+            }
+
+            //写入结果
+            result.Data = List;
+            return result;
+        }
+
+        /// <summary>
+        /// 获取停台频繁机台，机台号
+        /// </summary>
+        public JsonResult LoomAnalysisPie3_1Title()
+        {
+            JsonResult result = new JsonResult();
+            DataTable data = new LoomDAL().LoomAnalysisPie3("iAllStopTime");
+            object[] List = new object[data.Rows.Count];
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                List[i] = new object[] { (int)row["iAllStopTime"], (string)row["iMachineID"] };
                 i++;
             }
 

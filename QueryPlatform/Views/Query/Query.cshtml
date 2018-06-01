@@ -110,6 +110,36 @@
                 language: 'zh-CN'
             });
 
+            var date = new Date;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            sday = (day < 10 ? "0" + day : day);
+            var hour = date.getHours();
+            month = (month < 10 ? "0" + month : month);            
+            var mydate = year.toString() + '-' + month.toString() + '-' + day.toString();
+            if (hour > 20) {
+                $('#TimeStart').val(year.toString() + '-' + month.toString() + '-' + sday.toString()+' 08:00');
+                $('#TimeEnd').val(year.toString() + '-' + month.toString() + '-' + sday.toString() + ' 20:00');
+            }
+            else {
+                if (day = 1) { 
+                    var day1 = new Date();
+                    day1.setTime(day1.getTime() - 24 * 60 * 60 * 1000);
+                    var year1 = day1.getFullYear();
+                    var month1 = day1.getMonth() + 1;
+                    month1 = (month1 < 10 ? "0" + month1 : month1);
+                    var day1 = day1.getDate();
+                    day1 = (day1 < 10 ? "0" + day1 : day1);
+                    $('#TimeStart').val(year1.toString() + '-' + month1.toString() + '-' + day1.toString() + ' 20:00');
+                    $('#TimeEnd').val(year.toString() + '-' + month.toString() + '-' + sday.toString() + ' 8:00');
+                }
+                else {
+                    $('#TimeStart').val(year.toString() + '-' + month.toString() + '-' + (day-1).toString() + ' 20:00');
+                    $('#TimeEnd').val(year.toString() + '-' + month.toString() + '-' + sday.toString() + ' 8:00');
+                }  
+            }
+
             //下拉框
             $('#MachineType').select2({ language: "zh-CN" });
             $('#MachineNo').select2({ language: "zh-CN" });

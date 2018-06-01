@@ -1,0 +1,1369 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section pagePluginsCSS{
+
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        织机情况统计
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            @Html.Hidden("iClassId", (int)ViewBag.iClassId)
+            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--primary" role="tablist">
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_1" role="tab">
+                        <i class="fa fa-pie-chart"></i>
+                        设备
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_2" role="tab">
+                        <i class="fa fa-line-chart"></i>
+                        产量
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_3" role="tab">
+                        <i class="fa fa-bar-chart"></i>
+                        效率
+                    </a>
+                </li>
+                @*<li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_4" role="tab">
+                            <i class="fa fa-group"></i>
+                            员工
+                        </a>
+                    </li>*@
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_1" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            实时停台情况
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie1" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            实时停台明细
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie2" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            停台次数
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1">
+                                        日期:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="DayTime1" name="DayTime" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-form-label col-md-1">
+                                        班次:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-select2" id="Class1" name="Class" style="height:50px"></select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="Query1" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="containerPie3" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            停台时间
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1">
+                                        日期:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="DayTime2" name="DayTime" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-form-label col-md-1">
+                                        班次:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-select2" id="Class2" name="Class" style="height:50px"></select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="Query2" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="containerPie4" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            当班频繁停台设备 时间(分钟)
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerBar2" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            当班频繁停台设备 次数
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerBar1" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            实时车速
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie7" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_2" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            产量月报
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1 offset-1">
+                                        月份:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="MonthTime1" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="containerLine1" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            当班品种产量
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                努力开发中...
+                                @*<div id="containerLine1" class="col-md-12" style="height:300px"></div>*@
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_3" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            当班机台效率
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerPie6" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            效率月报
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1 offset-1">
+                                        月份:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="MonthTime2" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="containerLine2" class="col-md-12" style="height:300px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                            <!--begin::Portlet-->
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            当班低效率机台
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div id="containerBar3" class="col-md-12" style="height:500px"></div>
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+                @*<div class="tab-pane" id="m_tabs_4" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--begin::Portlet-->
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                挡车产量排行
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    努力开发中...
+                                </div>
+                                <!--end::Portlet-->
+                                <!--begin::Portlet-->
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                挡车效率排行
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    努力开发中...
+                                </div>
+                                <!--end::Portlet-->
+                                <!--begin::Portlet-->
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                挡车停台时间排行
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    努力开发中...
+                                </div>
+                                <!--end::Portlet-->
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pagePluginsScripts{
+    <!--echarts插件引入-->
+    <script src="~/plug-ins/echarts/echarts.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //为页面增加定时60秒刷新
+            $("#LayoutMeta")[0].setAttribute("http-equiv", "refresh");
+            $("#LayoutMeta")[0].setAttribute("content", 300);
+
+            var maincontainerLine1 = document.getElementById('containerLine1');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerLine1() {
+                maincontainerLine1.style.width = window.innerWidth*0.7 + 'px';
+                maincontainerLine1.style.height = '300px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerLine1();
+            // 初始化图表
+            var mainChart1 = echarts.init(maincontainerLine1);
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChart1.resize();
+            });
+
+            var maincontainerLine2 = document.getElementById('containerLine2');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerLine2() {
+                maincontainerLine2.style.width = window.innerWidth*0.7 + 'px';
+                maincontainerLine2.style.height = '300px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerLine2();
+            // 初始化图表
+            var mainChart2 = echarts.init(maincontainerLine2);
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChart2.resize();
+            });
+
+            var maincontainerPie6 = document.getElementById('containerPie6');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerPie6() {
+                maincontainerPie6.style.width = window.innerWidth * 0.7 + 'px';
+                maincontainerPie6.style.height = '400px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerPie6();
+            // 初始化图表
+            var mainChartPie6 = echarts.init(maincontainerPie6,'light');
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChartPie6.resize();
+            });
+
+            var maincontainerPie7 = document.getElementById('containerPie7');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerPie7() {
+                maincontainerPie7.style.width = window.innerWidth * 0.7 + 'px';
+                maincontainerPie7.style.height = '400px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerPie7();
+            // 初始化图表
+            var mainChartPie7 = echarts.init(maincontainerPie7, 'light');
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChartPie7.resize();
+            });
+
+            var maincontainerBar3 = document.getElementById('containerBar3');
+            //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+            function resizeMaincontainerBar3() {
+                maincontainerBar3.style.width = window.innerWidth * 0.7 + 'px';
+                maincontainerBar3.style.height = '400px';
+            };
+            //设置div容器高宽
+            resizeMaincontainerBar3();
+            // 初始化图表
+            var mainChartBar3 = echarts.init(maincontainerBar3, 'light');
+            $(window).on('resize', function () {
+                //屏幕大小自适应，重置容器高宽
+                mainChartBar3.resize();
+            });
+
+            //时间
+            var date = new Date;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            month = (month < 10 ? "0" + month : month);
+            day = (day < 10 ? "0" + day : day);
+            var mydate = year.toString() + '-' + month.toString();
+            $('#MonthTime1').val(mydate);
+            $('#MonthTime2').val(mydate);
+
+            var dayDate = year.toString() + '-' + month.toString() + '-' + day.toString();
+            $('input[name = DayTime]').val(dayDate);
+
+            $('#MonthTime1').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm',
+                language: 'zh-CN',
+                startView: 'year',
+                minView: 'year',
+                maxView: 'decade',
+            });
+            $('#MonthTime2').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm',
+                language: 'zh-CN',
+                startView: 'year',
+                minView: 'year',
+                maxView: 'decade',
+            });
+            $('input[name=DayTime]').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                todayBtn: true,
+                format: 'yyyy-mm-dd',
+                language: 'zh-CN',
+                startView: 2,
+                minView: 2,
+                endDate: dayDate,
+            });
+
+            //班次选择
+            $('select[name=Class]').select2({ minimumResultsForSearch: -1, language: "zh-CN"});
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetWorkTime")",
+                data: {},
+                async: false,
+                dataType: 'json',
+                success: function (result) {
+                    for (var i in result) {
+                        $("select[name=Class]").append($('<option></option>').val(result[i][0]).text(result[i][1]));
+                    }
+                    if ($('#iClassId').val()) {
+                        $('select[name=Class]').val($('#iClassId').val()).select2();
+                        $('select[name=Class]').change();
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
+
+            //containerPie1
+            var domPie1 = document.getElementById("containerPie1");
+            var myChartPie1 = echarts.init(domPie1, 'light');
+            var optionPie1 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}台({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}:{c}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['LightGreen', 'LightSalmon']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie1")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie1.series[0].data = result;
+                        for (var i in result) {
+                            optionPie1.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie1.setOption(optionPie1);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie1.setOption(optionPie1);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+                }
+            });
+
+            //containerPie2
+            var domPie2 = document.getElementById("containerPie2");
+            var myChartPie2 = echarts.init(domPie2, 'light');
+            var optionPie2 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}台({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie2")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie2.series[0].data = result;
+                        for (var i in result) {
+                            optionPie2.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie2.setOption(optionPie2);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie2.setOption(optionPie2);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerPie3
+            var domPie3 = document.getElementById("containerPie3");
+            var myChartPie3 = echarts.init(domPie3, 'light');
+            var optionPie3 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}次({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+
+            GetcontainerPie3();
+
+            //查询
+            $('#Query1').on('click', function () {
+                GetcontainerPie3();
+            });
+
+            //containerPie4
+            var domPie4 = document.getElementById("containerPie4");
+            var myChartPie4 = echarts.init(domPie4, 'light');
+            var optionPie4 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b}:{c}分钟({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '状态',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+
+            GetcontainerPie4();
+
+            //查询
+            $('#Query2').on('click', function () {
+                GetcontainerPie4();
+            });
+
+            //containerBar1
+            var domBar1 = document.getElementById("containerBar1");
+            var myChartBar1 = echarts.init(domBar1, 'light');
+            var optionBar1 = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: []
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: []
+                },
+                series: [
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie3Title")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        for (var i in result) {
+                            optionBar1.yAxis.data.push(result[i][1]);
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie3")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        optionBar1.series = result;
+                        // 为echarts对象加载数据
+                        myChartBar1.setOption(optionBar1);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartBar1.setOption(optionBar1);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerBar2
+            var domBar2 = document.getElementById("containerBar2");
+            var myChartBar2 = echarts.init(domBar2, 'light');
+            var optionBar2 = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: []
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: []
+                },
+                series: [
+                ],
+                color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie3_1Title")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        for (var i in result) {
+                            optionBar2.yAxis.data.push(result[i][1]);
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie3_1")",
+                data: {},
+                dataType: 'json',
+                async:false,
+                success: function (result) {
+                    if (result) {
+                        optionBar2.series = result;
+                        // 为echarts对象加载数据
+                        myChartBar2.setOption(optionBar2);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartBar2.setOption(optionBar2);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerBar3
+            var domBar3 = document.getElementById("containerBar3");
+            var myChartBar3 = echarts.init(domBar3, 'light');
+            var optionBar3 = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: [],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '效率',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: []
+                    }
+                ]
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/LoomAnalysisPie4")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        for (var i in result) {
+                            optionBar3.xAxis[0].data.push(result[i].name);
+                            optionBar3.series[0].data.push(result[i].value);
+                        }
+                        // 为echarts对象加载数据
+                        myChartBar3.setOption(optionBar3);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartBar3.setOption(optionBar3);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerPie6
+            var domPie6 = document.getElementById("containerPie6");
+            var myChartPie6 = echarts.init(domPie6, 'light');
+            var optionPie6 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '效率',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                //color: ['LightGreen', 'LightSalmon']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie3")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie6.series[0].data = result;
+                        for (var i in result) {
+                            optionPie6.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie6.setOption(optionPie6);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie6.setOption(optionPie6);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerPie7
+            var domPie7 = document.getElementById("containerPie7");
+            var myChartPie7 = echarts.init(domPie7, 'light');
+            var optionPie7 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        saveAsImage: { show: true }
+                    },
+                    left: 'left',
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'right',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '车速',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    formatter: '{b}'
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ],
+                //color: ['LightGreen', 'LightSalmon']
+            };
+            //ajax动态获取数据
+            $.ajax({
+                type: 'post',
+                url: "@Url.Content("~/Loom/GetLoomPie4")",
+                data: {},
+                dataType: 'json',
+                success: function (result) {
+                    if (result) {
+                        // 获取json值
+                        optionPie7.series[0].data = result;
+                        for (var i in result) {
+                            optionPie7.legend.data.push(result[i].name);
+                        }
+                        // 为echarts对象加载数据
+                        myChartPie7.setOption(optionPie7);
+                    }
+                    else {
+                        // 为echarts对象加载数据
+                        myChartPie7.setOption(optionPie7);
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                }
+            });
+
+            //containerLine1
+            var dom1 = document.getElementById("containerLine1");
+            var myChart1 = echarts.init(dom1, 'light');
+            var option1 = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        magicType: { show: true, type: ['bar','line'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: [],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '产量(米)',
+                        type: 'line',
+                        barWidth: '60%',
+                        data: []
+                    }
+                ]
+            };
+
+            DayAnalysis1();
+
+            //containerLine2
+            var dom2 = document.getElementById("containerLine2");
+            var myChart2 = echarts.init(dom2, 'light');
+            var option2 = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: true },
+                        magicType: { show: true, type: ['bar', 'line'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: [],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '效率(%)',
+                        type: 'line',
+                        barWidth: '60%',
+                        data: []
+                    }
+                ]
+            };
+
+            DayAnalysis2();
+
+            //查询
+            $('#MonthTime1').change(function () {
+                if (!$('#MonthTime1').val()) {
+                    alert("请选择时间后再操作");
+                    return;
+                }
+                DayAnalysis1();
+            });
+            $('#MonthTime2').change(function () {
+                if (!$('#MonthTime2').val()) {
+                    alert("请选择时间后再操作");
+                    return;
+                }
+                DayAnalysis2();
+            });
+
+            function DayAnalysis1() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/DayAnalysis1?time=")" + $('#MonthTime1').val(),
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            option1.xAxis[0].data = [];
+                            option1.series[0].data = [];
+                            for (var i in result) {
+                                option1.xAxis[0].data.push(result[i].name);
+                                option1.series[0].data.push(result[i].value);
+                            }
+                            // 为echarts对象加载数据
+                            myChart1.setOption(option1);
+                        }
+                        else {
+                            // 为echarts对象加载数据
+                            myChart1.setOption(option1);
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+            function DayAnalysis2() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/DayAnalysis2?time=")" + $('#MonthTime2').val(),
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                                option2.xAxis[0].data = [];
+                                option2.series[0].data = [];
+                                for (var i in result) {
+                                    option2.xAxis[0].data.push(result[i].name);
+                                    option2.series[0].data.push(result[i].value);
+                                }
+                                // 为echarts对象加载数据
+                                myChart2.setOption(option2);
+                            }
+                            else {
+                                // 为echarts对象加载数据
+                                myChart2.setOption(option2);
+                            }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+
+            function GetcontainerPie3() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisPie1_1?Time=")" + $('#DayTime1').val() + "&sClassName=" + $('#Class1').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            // 获取json值
+                            optionPie3.series[0].data = result;
+                            for (var i in result) {
+                                optionPie3.legend.data.push(result[i].name);
+                            }
+                            // 为echarts对象加载数据
+                            myChartPie3.setOption(optionPie3);
+                        }
+                        else {
+                            // 为echarts对象加载数据
+                            myChartPie3.setOption(optionPie3);
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+
+            function GetcontainerPie4() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisPie2_1?Time=")" + $('#DayTime2').val() + "&sClassName=" + $('#Class2').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            // 获取json值
+                            optionPie4.series[0].data = result;
+                            for (var i in result) {
+                                optionPie4.legend.data.push(result[i].name);
+                            }
+                            // 为echarts对象加载数据
+                            myChartPie4.setOption(optionPie4);
+                        }
+                        else {
+                            // 为echarts对象加载数据
+                            myChartPie4.setOption(optionPie4);
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+        });
+
+    </script>
+}

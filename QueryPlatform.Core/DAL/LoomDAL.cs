@@ -157,7 +157,23 @@ ORDER BY X.name DESC");
         public List<IntData> LoomAnalysisPie1()
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC  [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
+            List<IntData> list = new List<IntData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new IntData { value = (int)row["iStatusCount"], name = (string)row["sStatusType"] });
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取停台次数分析
+        /// </summary>
+        /// <returns></returns>
+        public List<IntData> LoomAnalysisPie1_1(string time, string sClassName)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spwebAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL',@time=:time,@sClassName=:sClassName",time,sClassName);
             List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
@@ -173,23 +189,49 @@ ORDER BY X.name DESC");
         public List<IntData> LoomAnalysisPie2()
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC  [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL'");
             List<IntData> list = new List<IntData>();
             foreach (DataRow row in data.Rows)
             {
-                list.Add(new IntData { value = Convert.ToInt32((decimal)row["iStatusTime"] / 60), name = (string)row["sStatusType"] });
+                list.Add(new IntData { value = Convert.ToInt32((decimal)row["iStatusTime"]), name = (string)row["sStatusType"] });
             }
             return list;
         }
 
         /// <summary>
-        /// 获取停台频繁机台
+        /// 获取停台时间分析
         /// </summary>
         /// <returns></returns>
-        public DataTable LoomAnalysisPie3()
+        public List<IntData> LoomAnalysisPie2_1(string time, string sClassName)
         {
             //获取数据集
-            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyBanGetMacOpClassDataList] @iDeptID='ALL',@iClassListID='NOW'");
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spwebAnalyMacGetMacStopStatusCountTime] @sMacNo='ALL',@time=:time,@sClassName=:sClassName", time, sClassName);
+            List<IntData> list = new List<IntData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new IntData { value = Convert.ToInt32((decimal)row["iStatusTime"]), name = (string)row["sStatusType"] });
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取停台频繁机台，按停机次数排序
+        /// </summary>
+        /// <returns></returns>
+        public DataTable LoomAnalysisPie3(string type)
+        {
+            string sql = "SELECT * FROM dbo.vwOpClassDataList WHERE iClassListID=dbo.fnzzGetClassid('NOW')";
+            if(type== "iAllStopCount")
+            {
+                sql += " ORDER BY iAllStopCount DESC";
+            }
+            else if(type== "iAllStopTime")
+            {
+                sql += " ORDER BY iAllStopTime DESC";
+            }
+
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader(sql);
             DataTable result = new DataTable();
             //克隆结构
             result = data.Clone();
@@ -279,6 +321,27 @@ FROM(SELECT A.iMachineID
      LEFT JOIN dbo.OpClassDataList B(NOLOCK) ON B.iMachineID = A.iMachineID AND B.iClassListID = dbo.fnzzGetClassid('NOW')
      WHERE A.iMachineID =:iMachineID
      GROUP BY A.iMachineID)X", iMachineID);
+            return data;
+        }
+
+        /// <summary>
+        /// 获取当前班次名称
+        /// </summary>
+        public int GetClassNow()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iiden FROM dbo.OpWorkTime(NOLOCK) WHERE sType=(SELECT sClassName FROM dbo.OpClassTimeList WHERE iClassListID=dbo.fnzzGetClassid('NOW'))");
+            int iClassId = (int)data.Rows[0]["iiden"];
+            return iClassId;
+        }
+
+        /// <summary>
+        /// 获取班次
+        /// </summary>
+        public DataTable GetWorkTime()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT text=sType,value=iiden FROM dbo.OpWorkTime(NOLOCK)");
             return data;
         }
     }
