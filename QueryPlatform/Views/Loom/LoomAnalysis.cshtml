@@ -160,12 +160,38 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            当班频繁停台设备 时间(分钟)
+                                            频繁停台设备 时间(分钟)
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1">
+                                        日期:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="DayTime4" name="DayTime" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-form-label col-md-1">
+                                        班次:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-select2" id="Class4" name="Class" style="height:50px"></select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="Query4" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
                                 <div id="containerBar2" class="col-md-12" style="height:500px"></div>
                             </div>
                             <!--end::Portlet-->
@@ -174,12 +200,38 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            当班频繁停台设备 次数
+                                            频繁停台设备 次数
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-md-1">
+                                        日期:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control m-input" readonly id="DayTime3" name="DayTime" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar glyphicon-th"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-form-label col-md-1">
+                                        班次:
+                                    </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-select2" id="Class3" name="Class" style="height:50px"></select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="Query3" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
                                 <div id="containerBar1" class="col-md-12" style="height:500px"></div>
                             </div>
                             <!--end::Portlet-->
@@ -799,48 +851,15 @@
                 ],
                 color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
             };
-            //ajax动态获取数据
-            $.ajax({
-                type: 'post',
-                url: "@Url.Content("~/Loom/LoomAnalysisPie3Title")",
-                data: {},
-                dataType: 'json',
-                async:false,
-                success: function (result) {
-                    if (result) {
-                        for (var i in result) {
-                            optionBar1.yAxis.data.push(result[i][1]);
-                        }
-                    }
-                },
-                error: function (XMLHttpRequest) {
-                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
 
-                }
-            });
-            //ajax动态获取数据
-            $.ajax({
-                type: 'post',
-                url: "@Url.Content("~/Loom/LoomAnalysisPie3")",
-                data: {},
-                dataType: 'json',
-                async:false,
-                success: function (result) {
-                    if (result) {
-                        optionBar1.series = result;
-                        // 为echarts对象加载数据
-                        myChartBar1.setOption(optionBar1);
-                    }
-                    else {
-                        // 为echarts对象加载数据
-                        myChartBar1.setOption(optionBar1);
-                    }
-                },
-                error: function (XMLHttpRequest) {
-                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
 
-                }
+            getcontainerBar1();
+
+            //查询
+            $('#Query3').on('click', function () {
+                getcontainerBar1();
             });
+
 
             //containerBar2
             var domBar2 = document.getElementById("containerBar2");
@@ -872,48 +891,15 @@
                 ],
                 color: ['Yellow', 'Red', 'OrangeRed', 'LightSkyBlue', 'LightGray', 'Coral']
             };
-            //ajax动态获取数据
-            $.ajax({
-                type: 'post',
-                url: "@Url.Content("~/Loom/LoomAnalysisPie3_1Title")",
-                data: {},
-                dataType: 'json',
-                async:false,
-                success: function (result) {
-                    if (result) {
-                        for (var i in result) {
-                            optionBar2.yAxis.data.push(result[i][1]);
-                        }
-                    }
-                },
-                error: function (XMLHttpRequest) {
-                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
 
-                }
-            });
-            //ajax动态获取数据
-            $.ajax({
-                type: 'post',
-                url: "@Url.Content("~/Loom/LoomAnalysisPie3_1")",
-                data: {},
-                dataType: 'json',
-                async:false,
-                success: function (result) {
-                    if (result) {
-                        optionBar2.series = result;
-                        // 为echarts对象加载数据
-                        myChartBar2.setOption(optionBar2);
-                    }
-                    else {
-                        // 为echarts对象加载数据
-                        myChartBar2.setOption(optionBar2);
-                    }
-                },
-                error: function (XMLHttpRequest) {
-                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+            getcontainerBar2();
 
-                }
+            //查询
+            $('#Query4').on('click', function () {
+                getcontainerBar2();
             });
+
+
 
             //containerBar3
             var domBar3 = document.getElementById("containerBar3");
@@ -1355,6 +1341,106 @@
                         else {
                             // 为echarts对象加载数据
                             myChartPie4.setOption(optionPie4);
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+
+            function getcontainerBar1() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisBar1Title?Time=")" + $('#DayTime3').val() + "&sClassName=" + $('#Class3').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    async:false,
+                    success: function (result) {
+                        if (result && result.length > 0) {
+                            optionBar1.yAxis.data = [];
+                            for (var i in result) {
+                                optionBar1.yAxis.data.push(result[i][1]);
+                            }
+                        }
+                        //else {
+                        //    //没有返回结果时，清空画布
+                        //    myChartBar1.clear();
+                        //}
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',//后台待处理
+                    url: "@Url.Content("~/Loom/LoomAnalysisBar1?Time=")" + $('#DayTime3').val() + "&sClassName=" + $('#Class3').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    async:false,
+                    success: function (result) {
+                        if (result) {
+                            optionBar1.series = result;
+                            // 为echarts对象加载数据
+                            myChartBar1.setOption(optionBar1);
+                        }
+                        else {
+                            myChartBar1.setOption(optionBar1);
+                        }
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+
+            function getcontainerBar2() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisBar2Title?Time=")" + $('#DayTime4').val() + "&sClassName=" + $('#Class4').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    async:false,
+                    success: function (result) {
+                        if (result && result.length > 0) {
+                            optionBar2.yAxis.data = [];
+                            for (var i in result) {
+                                optionBar2.yAxis.data.push(result[i][1]);
+                            }
+                        }
+                        //else {
+                        //    //没有返回结果时，清空画布
+                        //    myChartBar2.clear();
+                        //}
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisBar2?Time=")" + $('#DayTime4').val() + "&sClassName=" + $('#Class4').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    async:false,
+                    success: function (result) {
+                        if (result) {
+                            optionBar2.series = result;
+                            // 为echarts对象加载数据
+                            myChartBar2.setOption(optionBar2);
+                        }
+                        else {
+                            // 为echarts对象加载数据
+                            myChartBar2.setOption(optionBar2);
                         }
                     },
                     error: function (XMLHttpRequest) {

@@ -218,10 +218,18 @@ ORDER BY X.name DESC");
         /// 获取停台频繁机台，按停机次数排序
         /// </summary>
         /// <returns></returns>
-        public DataTable LoomAnalysisPie3(string type)
+        public DataTable LoomAnalysisPie3(string type,int iClassId)
         {
-            string sql = "SELECT * FROM dbo.vwOpClassDataList WHERE iClassListID=dbo.fnzzGetClassid('NOW')";
-            if(type== "iAllStopCount")
+            string sql = "";
+            if(iClassId==0)
+            {
+                sql = "SELECT * FROM dbo.vwOpClassDataList WHERE iClassListID=dbo.fnzzGetClassid('NOW')";
+            }
+            else
+            {
+                sql = "SELECT * FROM dbo.vwOpClassDataList WHERE iClassListID="+ Convert.ToString(iClassId);
+            }
+            if (type== "iAllStopCount")
             {
                 sql += " ORDER BY iAllStopCount DESC";
             }
@@ -236,9 +244,12 @@ ORDER BY X.name DESC");
             //克隆结构
             result = data.Clone();
             //取前十条
-            for (int i = 0; i < 10; i++)
+            if(data.Rows.Count>0)
             {
-                result.Rows.Add(data.Rows[i].ItemArray);
+                for (int i = 0; i < 10; i++)
+                {
+                    result.Rows.Add(data.Rows[i].ItemArray);
+                }
             }
             return result;
         }
@@ -343,6 +354,17 @@ FROM(SELECT A.iMachineID
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT text=sType,value=iiden FROM dbo.OpWorkTime(NOLOCK)");
             return data;
+        }
+
+        /// <summary>
+        /// 获取班次id
+        /// </summary>
+        public int GetClassId(string time,string sClassName)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT TOP 1 iClassListID FROM dbo.OpClassTimeList (NOLOCK) WHERE DATEDIFF(dd,tClassDate,:time)=0 AND sClassName=:sClassName", time, sClassName);
+            int iClassId = (int)data.Rows[0]["iClassListID"];
+            return iClassId;
         }
     }
 }

@@ -16,6 +16,12 @@ BEGIN TRY
 
 	IF OBJECT_ID(N'tempdb..#list') IS NOT NULL DROP TABLE #list
 	IF OBJECT_ID(N'tempdb..#stateList') IS NOT NULL DROP TABLE #stateList
+	IF OBJECT_ID(N'tempdb..#vwMachineMap') IS NOT NULL DROP TABLE #vwMachineMap
+
+	SELECT *
+	INTO #vwMachineMap
+    FROM dbo.vwMachineMap(NOLOCK)
+
 	CREATE TABLE #list(
 	id INT
 	)
@@ -77,10 +83,15 @@ BEGIN TRY
             9: { 'title': '离线', 'class': 'btn-outline-metal active' },
             10: { 'title': '其他停', 'class': 'btn-lightsalmon' },
 			*/
+			IF NOT EXISTS(SELECT TOP 1 1 FROM dbo.OpMachine A(NOLOCK) WHERE A.iRowId=@k AND A.iColumnId=@m)
+			BEGIN
+				SET @m=@m+1
+				CONTINUE;
+			END
 			SET @sql = 'UPDATE A SET x'+ CONVERT(NVARCHAR(50),@m) + '='
 			+''''
 			+(SELECT '<button type="button" class="btn m-btn--pill '
-			+(SELECT TOP 1 CASE C.iStatusID 
+			+(SELECT TOP 1 CASE B.iStatusID 
 						   WHEN 0 THEN 'btn-success'
 						   WHEN 1 THEN 'btn-yellow'
 						   WHEN 2 THEN 'btn-danger'
@@ -93,13 +104,11 @@ BEGIN TRY
 						   WHEN 9 THEN 'btn-outline-metal active'
 						   WHEN 10 THEN 'btn-lightsalmon'
 						   ELSE '' END
-			  FROM dbo.vwMachineMap B(NOLOCK) 
-			  JOIN dbo.OpStatusType C(NOLOCK) ON C.iStatusID=B.iStatusID
+			  FROM #vwMachineMap B(NOLOCK) 
 			  WHERE B.iMachineID=A.iMachineID)
 			+' m-btn m-btn--custom">'
-			+'机台:'+A.sMachineName+'<br/>状态:'+(SELECT TOP 1 C.sStatusType FROM dbo.vwMachineMap B(NOLOCK) 
-														  JOIN dbo.OpStatusType C(NOLOCK) ON C.iStatusID=B.iStatusID
-														  WHERE B.iMachineID=A.iMachineID)
+			+'机台:'+A.sMachineName+'<br/>状态:'+(SELECT TOP 1 B.sStatusType FROM #vwMachineMap B(NOLOCK) 
+												  WHERE B.iMachineID=A.iMachineID)
 			--1_车速,2_效率,3_打纬,4_运行时间,5_停机时间
 			+(SELECT CASE @iType WHEN 1 THEN '<br/>车速:'+CONVERT(NVARCHAR(50),A1.nBanciSpeed)
 					 WHEN 2 THEN '<br/>'+A1.sBancieff
@@ -113,16 +122,18 @@ BEGIN TRY
 			+ '</button >'+''''
 			+'FROM #list A WHERE id='+CONVERT(NVARCHAR(50),@k)
 			--PRINT @sql
-			EXEC(@sql) 
+			EXEC(@sql)
 			SET @m=@m+1
 		END
 		SET @k=@k+1
 	END
+	
 	--返回数据集
 	SELECT * FROM #list
 
 	IF OBJECT_ID(N'tempdb..#list') IS NOT NULL DROP TABLE #list
 	IF OBJECT_ID(N'tempdb..#stateList') IS NOT NULL DROP TABLE #stateList
+	IF OBJECT_ID(N'tempdb..#vwMachineMap') IS NOT NULL DROP TABLE #vwMachineMap
 END TRY
 BEGIN CATCH
 	DECLARE @sErrorMessage NVARCHAR(MAX)=REPLACE(ERROR_MESSAGE(),'%','%%')+CHAR(10)
