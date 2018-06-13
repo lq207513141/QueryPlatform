@@ -2,7 +2,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section pagePluginsCSS{
-
+    <style type="text/css">
+        .m-form__group {
+            padding-top: 10px;
+        }
+    </style>
 }
 <div class="m-content">
     <div class="m-portlet">
@@ -57,9 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div id="containerPie1" class="col-md-12" style="height:300px"></div>
-                            </div>
+                            <div id="containerPie1" class="col-md-12" style="height:300px"></div>
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -71,9 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div id="containerPie2" class="col-md-12" style="height:300px"></div>
-                            </div>
+                            <div id="containerPie2" class="col-md-12" style="height:300px"></div>
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -85,35 +85,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1">
-                                        日期:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="DayTime1" name="DayTime" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1">
+                                    日期:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="DayTime1" name="DayTime" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <label class="col-form-label col-md-1">
-                                        班次:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <select class="form-control m-select2" id="Class1" name="Class" style="height:50px"></select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button id="Query1" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
-                                            查询
-                                        </button>
-                                    </div>
                                 </div>
-                                <div id="containerPie3" class="col-md-12" style="height:300px"></div>
+                                <label class="col-form-label col-md-1">
+                                    班次:
+                                </label>
+                                <div class="col-md-2">
+                                    <select class="form-control m-select2" id="Class1" name="Class" style="height:50px"></select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="Query1" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                        查询
+                                    </button>
+                                </div>
                             </div>
+                            <div id="containerPie3" class="col-md-12" style="height:300px"></div>
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -125,35 +123,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1">
-                                        日期:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="DayTime2" name="DayTime" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1">
+                                    日期:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="DayTime2" name="DayTime" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <label class="col-form-label col-md-1">
-                                        班次:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <select class="form-control m-select2" id="Class2" name="Class" style="height:50px"></select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button id="Query2" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
-                                            查询
-                                        </button>
-                                    </div>
                                 </div>
-                                <div id="containerPie4" class="col-md-12" style="height:300px"></div>
+                                <label class="col-form-label col-md-1">
+                                    班次:
+                                </label>
+                                <div class="col-md-2">
+                                    <select class="form-control m-select2" id="Class2" name="Class" style="height:50px"></select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="Query2" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                        查询
+                                    </button>
+                                </div>
                             </div>
+                            <div id="containerPie4" class="col-md-12" style="height:300px"></div>
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -165,35 +161,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1">
-                                        日期:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="DayTime4" name="DayTime" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1">
+                                    日期:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="DayTime4" name="DayTime" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <label class="col-form-label col-md-1">
-                                        班次:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <select class="form-control m-select2" id="Class4" name="Class" style="height:50px"></select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button id="Query4" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
-                                            查询
-                                        </button>
-                                    </div>
                                 </div>
-                                <div id="containerBar2" class="col-md-12" style="height:500px"></div>
+                                <label class="col-form-label col-md-1">
+                                    班次:
+                                </label>
+                                <div class="col-md-2">
+                                    <select class="form-control m-select2" id="Class4" name="Class" style="height:50px"></select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="Query4" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                        查询
+                                    </button>
+                                </div>
                             </div>
+                            <div id="containerBar2" class="col-md-12" style="height:500px"></div>
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -205,35 +199,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1">
-                                        日期:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="DayTime3" name="DayTime" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1">
+                                    日期:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="DayTime3" name="DayTime" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <label class="col-form-label col-md-1">
-                                        班次:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <select class="form-control m-select2" id="Class3" name="Class" style="height:50px"></select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button id="Query3" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
-                                            查询
-                                        </button>
-                                    </div>
                                 </div>
-                                <div id="containerBar1" class="col-md-12" style="height:500px"></div>
+                                <label class="col-form-label col-md-1">
+                                    班次:
+                                </label>
+                                <div class="col-md-2">
+                                    <select class="form-control m-select2" id="Class3" name="Class" style="height:50px"></select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="Query3" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                        查询
+                                    </button>
+                                </div>
                             </div>
+                            <div id="containerBar1" class="col-md-12" style="height:500px"></div>
+
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -245,9 +239,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div id="containerPie7" class="col-md-12" style="height:500px"></div>
-                            </div>
+
+                            <div id="containerPie7" class="col-md-12" style="height:500px"></div>
+
                             <!--end::Portlet-->
                         </div>
                     </div>
@@ -265,40 +259,116 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1 offset-1">
-                                        月份:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="MonthTime1" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1 offset-1">
+                                    月份:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="MonthTime1" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="containerLine1" class="col-md-12" style="height:300px"></div>
                             </div>
+                            <div id="containerLine1" class="col-md-12" style="height:300px"></div>
                             <!--end::Portlet-->
-                            <!--begin::Portlet-->
-                            <div class="m-portlet__head">
-                                <div class="m-portlet__head-caption">
-                                    <div class="m-portlet__head-title">
-                                        <h3 class="m-portlet__head-text">
-                                            当班品种产量
-                                        </h3>
+                            <!--begin::Section-->
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <!--begin::Item-->
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse" href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa flaticon-list"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title">
+                                            品种产量
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse" id="m_accordion_1_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_1_item_1_head" data-parent="#m_accordion_1">
+                                        <div class="form-group m-form__group row">
+                                            <label class="col-form-label col-md-1">
+                                                日期:
+                                            </label>
+                                            <div class="col-md-2">
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control m-input" readonly id="DayTime5" name="DayTime" />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="la la-calendar glyphicon-th"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-form-label col-md-1">
+                                                班次:
+                                            </label>
+                                            <div class="col-md-2">
+                                                <select class="form-control m-select2" id="Class5" name="Class" style="height:50px"></select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button id="Query5" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                                    查询
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--begin: Datatable -->
+                                        <div class="m_datatable1" id="json_data"></div>
+                                        <!--end: Datatable -->
                                     </div>
                                 </div>
+                                <!--end::Item-->
+                                <!--begin::Item-->
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_2_head" data-toggle="collapse" href="#m_accordion_1_item_2_body" aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa flaticon-users"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title">
+                                            挡车工产量
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse" id="m_accordion_1_item_2_body" class=" " role="tabpanel" aria-labelledby="m_accordion_1_item_2_head" data-parent="#m_accordion_1">
+                                        <div class="form-group m-form__group row">
+                                            <label class="col-form-label col-md-1">
+                                                日期:
+                                            </label>
+                                            <div class="col-md-2">
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control m-input" readonly id="DayTime6" name="DayTime" />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="la la-calendar glyphicon-th"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-form-label col-md-1">
+                                                班次:
+                                            </label>
+                                            <div class="col-md-2">
+                                                <select class="form-control m-select2" id="Class6" name="Class" style="height:50px"></select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button id="Query6" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                                    查询
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--begin: Datatable -->
+                                        <div class="m_datatable2" id="json_data"></div>
+                                        <!--end: Datatable -->
+                                    </div>
+                                </div>
+                                <!--end::Item-->
                             </div>
-                            <div class="m-portlet__body">
-                                努力开发中...
-                                @*<div id="containerLine1" class="col-md-12" style="height:300px"></div>*@
-                            </div>
-                            <!--end::Portlet-->
+                            <!--end::Section-->
                         </div>
                     </div>
                 </div>
@@ -315,9 +385,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div id="containerPie6" class="col-md-12" style="height:500px"></div>
-                            </div>
+
+                            <div id="containerPie6" class="col-md-12" style="height:500px"></div>
+
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -329,24 +399,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-form-label col-md-1 offset-1">
-                                        月份:
-                                    </label>
-                                    <div class="col-md-2">
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control m-input" readonly id="MonthTime2" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-calendar glyphicon-th"></i>
-                                                </span>
-                                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1 offset-1">
+                                    月份:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="MonthTime2" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="containerLine2" class="col-md-12" style="height:300px"></div>
                             </div>
+                            <div id="containerLine2" class="col-md-12" style="height:300px"></div>
+
                             <!--end::Portlet-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__head">
@@ -358,9 +428,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div id="containerBar3" class="col-md-12" style="height:500px"></div>
-                            </div>
+
+                            <div id="containerBar3" class="col-md-12" style="height:500px"></div>
+
                             <!--end::Portlet-->
                         </div>
                     </div>
@@ -1231,6 +1301,138 @@
                     return;
                 }
                 DayAnalysis2();
+            });
+
+            var options1 = {
+                // datasource definition
+                data: {
+                    type: 'remote',
+                    source: {
+                        read: {
+                            // sample GET method
+                            method: 'Get',
+                            url: "@Url.Content("~/Loom/ProductNoDay?Time=")" + $('#DayTime5').val() + "&sClassName=" + $('#Class5').select2("data")[0].text,
+                            map: function (raw) {
+                                // sample data mapping
+                                var dataSet = raw;
+                                if (typeof raw.data !== 'undefined') {
+                                    dataSet = raw.data;
+                                }
+                                return dataSet;
+                            },
+                        },
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                },
+                // layout definition
+                layout: {
+                    theme: 'default', // datatable theme
+                    class: '', // custom wrapper class
+                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                    footer: false // display/hide footer
+                },
+                // column sorting
+                sortable: false,
+                pagination: false,
+                columns: [{
+                    field: "sProductNo",
+                    title: "品种",
+                    width: 70,
+                }, {
+                    field: "nLength",
+                    title: "产能",
+                    width: 80,
+                    // callback function support for column rendering
+                    template: function (row) {
+                        return '米数:' + row.nLength + '<br/>机台:' + row.iCount + '<br/>效率:' + row.nbancieff+'%';
+                    },
+                },{
+                    field: "iAllStopCount",
+                    title: "明细",
+                    width:150,
+                    // callback function support for column rendering
+                    template: function (row) {
+                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台次数:' + row.iAllStopCount + '<br/>总停台(时:分:秒):' + row.sAllStopTime;
+                    },
+                },]
+            };
+            var datatable1 = $('.m_datatable1').mDatatable(options1);
+
+            //查询
+            $('#Query5').on('click', function () {
+                $('.m_datatable1').mDatatable('destroy');
+                options1.data.source.read.url = "@Url.Content("~/Loom/ProductNoDay?Time=")" + $('#DayTime5').val() + "&sClassName=" + $('#Class5').select2("data")[0].text;
+                $('.m_datatable1').mDatatable(options1);
+                //GetProductNoDay();
+            });
+
+             var options2 = {
+                // datasource definition
+                data: {
+                    type: 'remote',
+                    source: {
+                        read: {
+                            // sample GET method
+                            method: 'Get',
+                            url: "@Url.Content("~/Loom/WorkerDay?Time=")" + $('#DayTime6').val() + "&sClassName=" + $('#Class6').select2("data")[0].text,
+                            map: function (raw) {
+                                // sample data mapping
+                                var dataSet = raw;
+                                if (typeof raw.data !== 'undefined') {
+                                    dataSet = raw.data;
+                                }
+                                return dataSet;
+                            },
+                        },
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                },
+                // layout definition
+                layout: {
+                    theme: 'default', // datatable theme
+                    class: '', // custom wrapper class
+                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                    footer: false // display/hide footer
+                },
+                // column sorting
+                sortable: false,
+                pagination: false,
+                columns: [{
+                    field: "sWorker",
+                    title: "员工",
+                    width: 70,
+                }, {
+                    field: "nLength",
+                    title: "产能",
+                    width: 80,
+                    // callback function support for column rendering
+                    template: function (row) {
+                        return '米数:' + row.nLength + '<br/>机台:' + row.iCount + '<br/>效率:' + row.nbancieff+'%';
+                    },
+                },{
+                    field: "iAllStopCount",
+                    title: "明细",
+                    width:150,
+                    // callback function support for column rendering
+                    template: function (row) {
+                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台次数:' + row.iAllStopCount + '<br/>总停台(时:分:秒):' + row.sAllStopTime;
+                    },
+                },]
+            };
+            var datatable2 = $('.m_datatable2').mDatatable(options2);
+
+            //查询
+            $('#Query6').on('click', function () {
+                $('.m_datatable2').mDatatable('destroy');
+                options2.data.source.read.url = "@Url.Content("~/Loom/WorkerDay?Time=")" + $('#DayTime6').val() + "&sClassName=" + $('#Class6').select2("data")[0].text;
+                $('.m_datatable2').mDatatable(options2);
+                //GetProductNoDay();
             });
 
             function DayAnalysis1() {

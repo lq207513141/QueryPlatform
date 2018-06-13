@@ -752,19 +752,19 @@
       <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>06/01/2018 14:46:34</publishTime>
+      <publishTime>06/13/2018 10:30:49</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
       <publishTime>05/10/2018 08:57:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>06/01/2018 14:46:34</publishTime>
+      <publishTime>06/13/2018 10:30:49</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>06/01/2018 14:46:43</publishTime>
+      <publishTime>06/13/2018 10:30:54</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>06/01/2018 14:46:43</publishTime>
+      <publishTime>06/13/2018 10:30:54</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -947,7 +947,7 @@
       <publishTime>05/31/2018 09:44:50</publishTime>
     </File>
     <File Include="Views/Loom/LoomAnalysis.cshtml">
-      <publishTime>06/01/2018 14:18:40</publishTime>
+      <publishTime>06/13/2018 10:28:48</publishTime>
     </File>
     <File Include="Views/Loom/LoomAnalysisPie.cshtml">
       <publishTime>05/29/2018 13:48:36</publishTime>
@@ -998,7 +998,7 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/14/2018 17:13:00</publishTime>
+      <publishTime>06/05/2018 17:34:47</publishTime>
     </File>
   </ItemGroup>
 </Project>

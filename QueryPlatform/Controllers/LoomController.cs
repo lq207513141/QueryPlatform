@@ -26,7 +26,7 @@ namespace MetronicTest.Controllers
 
         public ActionResult LoomAnalysis()
         {
-            ViewBag.iClassId = new LoomDAL().GetClassNow();
+            ViewBag.iClassId = new LoomDAL().GetClassNameNow();
             return View();
         }
 
@@ -493,6 +493,62 @@ namespace MetronicTest.Controllers
             List<DecimalData> list = new LoomDAL().DayAnalysis2(time);
             //写入结果
             result.Data = list;
+            return result;
+        }
+
+        /// <summary>
+        /// 查询品种产量日报
+        /// </summary>
+        public JsonResult ProductNoDay(string Time,string sClassName)
+        {
+            //json结果
+            JsonResult result = new JsonResult();
+            //json.data
+            AjaxTablePageData<LoomProductNoDay> pageData = new AjaxTablePageData<LoomProductNoDay>();
+            //获取班次id
+            int iClassId = 0;
+            if (string.IsNullOrEmpty(Time)||string.IsNullOrEmpty(sClassName))
+            {
+                iClassId = new LoomDAL().GetClassIdNow();
+            }
+            else
+            {
+                iClassId = new LoomDAL().GetClassId(Time, sClassName);
+            }          
+            //根据当前页和行数，获取数据集
+            List<LoomProductNoDay> list = new LoomDAL().GetProductNoDay(iClassId);
+            pageData.data = list;
+            //允许get
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = pageData;
+            return result;
+        }
+
+        /// <summary>
+        /// 查询挡车工产量日报
+        /// </summary>
+        public JsonResult WorkerDay(string Time, string sClassName)
+        {
+            //json结果
+            JsonResult result = new JsonResult();
+            //json.data
+            AjaxTablePageData<LoomWorkerDay> pageData = new AjaxTablePageData<LoomWorkerDay>();
+            //获取班次id
+            int iClassId = 0;
+            if (string.IsNullOrEmpty(Time) || string.IsNullOrEmpty(sClassName))
+            {
+                iClassId = new LoomDAL().GetClassIdNow();
+            }
+            else
+            {
+                iClassId = new LoomDAL().GetClassId(Time, sClassName);
+            }
+            //根据当前页和行数，获取数据集
+            List<LoomWorkerDay> list = new LoomDAL().GetWorkerDay(iClassId);
+            pageData.data = list;
+            //允许get
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = pageData;
             return result;
         }
     }

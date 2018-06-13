@@ -88,17 +88,19 @@
     <Compile Include="DAL\OpMachineDAL.cs" />
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\TableListChange.cs" />
-    <Compile Include="Model\BeamLibraryCount.cs" />
-    <Compile Include="Model\BeamLibrary.cs" />
-    <Compile Include="Model\Machine.cs" />
+    <Compile Include="Model\BeamLibrary\BeamLibraryCount.cs" />
+    <Compile Include="Model\BeamLibrary\BeamLibrary.cs" />
+    <Compile Include="Model\Loom\LoomWorkerDay.cs" />
+    <Compile Include="Model\Loom\LoomProductNoDay.cs" />
+    <Compile Include="Model\Yarn\Machine.cs" />
     <Compile Include="Model\Normal.cs" />
     <Compile Include="Model\Lable.cs" />
     <Compile Include="Model\BarData.cs" />
     <Compile Include="Model\DecimalData.cs" />
     <Compile Include="Model\IntData.cs" />
-    <Compile Include="Model\Loom.cs" />
-    <Compile Include="Model\LoomStateCoordinate.cs" />
-    <Compile Include="Model\OpMachine.cs" />
+    <Compile Include="Model\Loom\Loom.cs" />
+    <Compile Include="Model\Loom\LoomStateCoordinate.cs" />
+    <Compile Include="Model\Yarn\OpMachine.cs" />
     <Compile Include="Model\ChartData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

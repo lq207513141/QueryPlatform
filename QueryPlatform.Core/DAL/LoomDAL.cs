@@ -336,13 +336,24 @@ FROM(SELECT A.iMachineID
         }
 
         /// <summary>
-        /// 获取当前班次名称
+        /// 获取当前班次名称对应的id
         /// </summary>
-        public int GetClassNow()
+        public int GetClassNameNow()
         {
             //获取数据集
             DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iiden FROM dbo.OpWorkTime(NOLOCK) WHERE sType=(SELECT sClassName FROM dbo.OpClassTimeList WHERE iClassListID=dbo.fnzzGetClassid('NOW'))");
             int iClassId = (int)data.Rows[0]["iiden"];
+            return iClassId;
+        }
+
+        /// <summary>
+        /// 获取当前班次id
+        /// </summary>
+        public int GetClassIdNow()
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT iClassListID=CONVERT(INT,dbo.fnzzGetClassid('NOW'))");
+            int iClassId = (int)data.Rows[0]["iClassListID"];
             return iClassId;
         }
 
@@ -365,6 +376,30 @@ FROM(SELECT A.iMachineID
             DataTable data = DBHelper.DbContext().m_ExecuteReader("SELECT TOP 1 iClassListID FROM dbo.OpClassTimeList (NOLOCK) WHERE DATEDIFF(dd,tClassDate,:time)=0 AND sClassName=:sClassName", time, sClassName);
             int iClassId = (int)data.Rows[0]["iClassListID"];
             return iClassId;
+        }
+
+        /// <summary>
+        /// 获取品名每日情况
+        /// </summary>
+        /// <returns></returns>
+        public List<LoomProductNoDay> GetProductNoDay(int iClassId)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzReportfmProductDaySumReportByType] @iDeptID = 1,@iClassListID=:iClassId", iClassId);
+            List<LoomProductNoDay> list = TableListChange.TableToList<LoomProductNoDay>(data);
+            return list;
+        }
+
+        /// <summary>
+        /// 获取挡车工每日情况
+        /// </summary>
+        /// <returns></returns>
+        public List<LoomWorkerDay> GetWorkerDay(int iClassId)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzReportfmWorkProductDaySumReport] @iDeptID = 1,@iClassListID=:iClassId", iClassId);
+            List<LoomWorkerDay> list = TableListChange.TableToList<LoomWorkerDay>(data);
+            return list;
         }
     }
 }
