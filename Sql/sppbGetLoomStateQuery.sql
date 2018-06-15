@@ -48,20 +48,32 @@ BEGIN TRY
 	END
 
 	--查询机台状态参数
-	SELECT X.iMachineID,X.iPickCount
-	,nBancieff=CONVERT(DECIMAL(18, 2),CASE WHEN (X.iRunTime + X.iAllStopTime)=0 THEN 0 ELSE X.iRunTime * 100.0/ (X.iRunTime + X.iAllStopTime)END)
-	,sBancieff=CONVERT(NVARCHAR(50),CONVERT(DECIMAL(18,2), CASE WHEN (X.iRunTime + X.iAllStopTime)=0 THEN 0 ELSE X.iRunTime * 100.0/ (X.iRunTime + X.iAllStopTime)END))+'%'
-	,nBanciSpeed=CASE WHEN X.iRunTime =0 THEN 0 ELSE  CONVERT(DECIMAL(18,0),(X.iPickCount*60.0)/iRunTime) END
-	,sRunTime=CONVERT(NVARCHAR(50),X.iRunTime/3600)+'小时'+CONVERT(NVARCHAR(50),X.iRunTime%3600/60)+'分'
-	,sAllStopTime=CONVERT(NVARCHAR(50),X.iAllStopTime/3600)+'小时'+CONVERT(NVARCHAR(50),X.iAllStopTime%3600/60)+'分'
+	SELECT Z.*
+	,sYuLiaojiTime=CONVERT(NVARCHAR(50),CASE WHEN Z.nBanciSpeed=0 OR Z.nWeftDensity=0 THEN GETDATE()+365 
+				   ELSE ISNULL(DATEADD(MINUTE,(Z.nRemainLength*1.0/(Z.nBanciSpeed*1.0/Z.nWeftDensity/100)),GETDATE()),GETDATE()+365) END,2)
 	INTO #stateList
-	FROM(SELECT A.iMachineID
-		 ,iRunTime=SUM(ISNULL(B.iRunTime, 0))
-		 ,iAllStopTime=SUM(ISNULL(B.iAllStopTime, 0))
-		 ,iPickCount=SUM(ISNULL(B.iPickCount, 0))
-		 FROM dbo.OpMachine A(NOLOCK) 
-		 LEFT JOIN dbo.OpClassDataList B(NOLOCK) ON B.iMachineID = A.iMachineID AND B.iClassListID = dbo.fnzzGetClassid('NOW')
-		 GROUP BY A.iMachineID)X
+	FROM(SELECT X.iMachineID,X.iPickCount
+		,nBancieff=CONVERT(DECIMAL(18, 2),CASE WHEN (X.iRunTime + X.iAllStopTime)=0 THEN 0 ELSE X.iRunTime * 100.0/ (X.iRunTime + X.iAllStopTime)END)
+		,sBancieff=CONVERT(NVARCHAR(50),CONVERT(DECIMAL(18,2), CASE WHEN (X.iRunTime + X.iAllStopTime)=0 THEN 0 ELSE X.iRunTime * 100.0/ (X.iRunTime + X.iAllStopTime)END))+'%'
+		,nBanciSpeed=CASE WHEN X.iRunTime =0 THEN 0 ELSE  CONVERT(DECIMAL(18,0),(X.iPickCount*60.0)/iRunTime) END
+		,sRunTime=CONVERT(NVARCHAR(50),X.iRunTime/3600)+'小时'+CONVERT(NVARCHAR(50),X.iRunTime%3600/60)+'分'
+		,sAllStopTime=CONVERT(NVARCHAR(50),X.iAllStopTime/3600)+'小时'+CONVERT(NVARCHAR(50),X.iAllStopTime%3600/60)+'分'
+		,sWorker=ISNULL((SELECT TOP 1 A1.sWorker FROM uvwOpOnDuty A1(NOLOCK) WHERE A1.iClassListID=dbo.fnzzGetClassid('NOW') AND A1.iMachineID = X.iMachineID),'未上机')
+		,sTaskNo=ISNULL(Y.sTaskNo,'未上机')--轴卡号
+		,sProductNo=ISNULL(Y.sProductNo,'未上机')--品名
+		,sActStartTime=ISNULL(CONVERT(NVARCHAR(50),Y.tActStartTime,2),'未上机')--上机时间
+		--用于计算
+		,X.iRunTime
+		,nWeftDensity=ISNULL(Y.nWeftDensity,30)--纬密
+		,nRemainLength=ISNULL(Y.nRemainLength,0)--任务长度
+		FROM(SELECT A.iMachineID,A.sTaskNo
+			 ,iRunTime=SUM(ISNULL(B.iRunTime, 0))
+			 ,iAllStopTime=SUM(ISNULL(B.iAllStopTime, 0))
+			 ,iPickCount=SUM(ISNULL(B.iPickCount, 0))
+			 FROM dbo.OpMachine A(NOLOCK) 
+			 LEFT JOIN dbo.OpClassDataList B(NOLOCK) ON B.iMachineID = A.iMachineID AND B.iClassListID = dbo.fnzzGetClassid('NOW')		 
+			 GROUP BY A.iMachineID,A.sTaskNo)X
+		LEFT JOIN dbo.OpTaskInfo Y ON Y.sTaskNo=X.sTaskNo)Z
 
 	--按坐标点更新数据
 	DECLARE @k INT=1
@@ -109,12 +121,18 @@ BEGIN TRY
 			+' m-btn m-btn--custom">'
 			+'机台:'+A.sMachineName+'<br/>状态:'+(SELECT TOP 1 B.sStatusType FROM #vwMachineMap B(NOLOCK) 
 												  WHERE B.iMachineID=A.iMachineID)
-			--1_车速,2_效率,3_打纬,4_运行时间,5_停机时间
+			--1_车速,2_效率,3_打纬,4_运行时间,5_停机时间，6_挡车工，7_品种，8_轴卡,9_上机时间
 			+(SELECT CASE @iType WHEN 1 THEN '<br/>车速:'+CONVERT(NVARCHAR(50),A1.nBanciSpeed)
 					 WHEN 2 THEN '<br/>'+A1.sBancieff
 					 WHEN 3 THEN '<br/>'+CONVERT(NVARCHAR(50),A1.iPickCount)
 					 WHEN 4 THEN '<br/>'+A1.sRunTime
 					 WHEN 5 THEN '<br/>'+A1.sAllStopTime
+					 WHEN 6 THEN '<br/>'+A1.sWorker
+					 WHEN 7 THEN '<br/>'+A1.sProductNo
+					 WHEN 8 THEN '<br/>'+A1.sTaskNo
+					 WHEN 9 THEN '<br/>'+A1.sActStartTime
+					 WHEN 10 THEN '<br/>'+A1.sYuLiaojiTime
+					 WHEN 11 THEN '<br/>'+CASE WHEN DATEDIFF(dd,GETDATE(),A1.sYuLiaojiTime)<=2 AND DATEDIFF(dd,GETDATE(),A1.sYuLiaojiTime)>0 THEN A1.sYuLiaojiTime ELSE 0x END
 					 ELSE '' END
 			  FROM #stateList A1(NOLOCK) 
 			  WHERE A1.iMachineID=A.iMachineID)

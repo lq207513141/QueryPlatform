@@ -46,5 +46,15 @@ namespace QueryPlatform.Core.Model
         /// 总停台时间
         /// </summary>
         public string sAllStopTime { get; set; }
+
+        /// <summary>
+        /// 米数比较，最大2，最小1
+        /// </summary>
+        public int iCompare1 { get; set; }
+
+        /// <summary>
+        /// 效率比较，最大2，最小1
+        /// </summary>
+        public int iCompare2 { get; set; }
     }
 }

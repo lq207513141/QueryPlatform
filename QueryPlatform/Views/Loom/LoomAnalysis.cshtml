@@ -423,66 +423,43 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            当班低效率机台
+                                            低效率机台
                                         </h3>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-md-1">
+                                    日期:
+                                </label>
+                                <div class="col-md-2">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control m-input" readonly id="DayTime7" name="DayTime" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar glyphicon-th"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-form-label col-md-1">
+                                    班次:
+                                </label>
+                                <div class="col-md-2">
+                                    <select class="form-control m-select2" id="Class7" name="Class" style="height:50px"></select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="Query7" type="button" class="btn m-btn--pill btn-outline-info active" style="width:80px">
+                                        查询
+                                    </button>
+                                </div>
+                            </div>
                             <div id="containerBar3" class="col-md-12" style="height:500px"></div>
 
                             <!--end::Portlet-->
                         </div>
                     </div>
                 </div>
-                @*<div class="tab-pane" id="m_tabs_4" role="tabpanel">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--begin::Portlet-->
-                                <div class="m-portlet__head">
-                                    <div class="m-portlet__head-caption">
-                                        <div class="m-portlet__head-title">
-                                            <h3 class="m-portlet__head-text">
-                                                挡车产量排行
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="m-portlet__body">
-                                    努力开发中...
-                                </div>
-                                <!--end::Portlet-->
-                                <!--begin::Portlet-->
-                                <div class="m-portlet__head">
-                                    <div class="m-portlet__head-caption">
-                                        <div class="m-portlet__head-title">
-                                            <h3 class="m-portlet__head-text">
-                                                挡车效率排行
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="m-portlet__body">
-                                    努力开发中...
-                                </div>
-                                <!--end::Portlet-->
-                                <!--begin::Portlet-->
-                                <div class="m-portlet__head">
-                                    <div class="m-portlet__head-caption">
-                                        <div class="m-portlet__head-title">
-                                            <h3 class="m-portlet__head-text">
-                                                挡车停台时间排行
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="m-portlet__body">
-                                    努力开发中...
-                                </div>
-                                <!--end::Portlet-->
-                            </div>
-                        </div>
-                    </div>*@
             </div>
         </div>
     </div>
@@ -1011,30 +988,12 @@
                     }
                 ]
             };
-            //ajax动态获取数据
-            $.ajax({
-                type: 'post',
-                url: "@Url.Content("~/Loom/LoomAnalysisPie4")",
-                data: {},
-                dataType: 'json',
-                success: function (result) {
-                    if (result) {
-                        for (var i in result) {
-                            optionBar3.xAxis[0].data.push(result[i].name);
-                            optionBar3.series[0].data.push(result[i].value);
-                        }
-                        // 为echarts对象加载数据
-                        myChartBar3.setOption(optionBar3);
-                    }
-                    else {
-                        // 为echarts对象加载数据
-                        myChartBar3.setOption(optionBar3);
-                    }
-                },
-                error: function (XMLHttpRequest) {
-                    alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
 
-                }
+            GetcontainerBar3();
+
+            //查询
+            $('#Query7').on('click', function () {
+                GetcontainerBar3();
             });
 
             //containerPie6
@@ -1347,7 +1306,8 @@
                     width: 80,
                     // callback function support for column rendering
                     template: function (row) {
-                        return '米数:' + row.nLength + '<br/>机台:' + row.iCount + '<br/>效率:' + row.nbancieff+'%';
+
+                        return '米数:' + row.nLength + '米<br/>机台:' + row.iCount + '台<br/>效率:' + row.nbancieff+'%';
                     },
                 },{
                     field: "iAllStopCount",
@@ -1355,7 +1315,7 @@
                     width:150,
                     // callback function support for column rendering
                     template: function (row) {
-                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台次数:' + row.iAllStopCount + '<br/>总停台(时:分:秒):' + row.sAllStopTime;
+                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台:' + row.iAllStopCount + '次<br/>总停台(时:分:秒):' + row.sAllStopTime;
                     },
                 },]
             };
@@ -1412,8 +1372,13 @@
                     title: "产能",
                     width: 80,
                     // callback function support for column rendering
-                    template: function (row) {
-                        return '米数:' + row.nLength + '<br/>机台:' + row.iCount + '<br/>效率:' + row.nbancieff+'%';
+                        template: function (row) {
+                            var status = {
+                                0: { 'title': '正常', 'class': '' },
+                                1: { 'title': '最小', 'class': 'color:#FF0000' },
+                                2: { 'title': '最大', 'class': 'color:#00CD00' },
+                            };
+                            return '<span style="' + status[row.iCompare1].class + '">米数:' + row.nLength + '米</span><br/>机台:' + row.iCount + '台<br/><span style="' + status[row.iCompare2].class + '">效率:' + row.nbancieff + '%</span>';
                     },
                 },{
                     field: "iAllStopCount",
@@ -1421,7 +1386,7 @@
                     width:150,
                     // callback function support for column rendering
                     template: function (row) {
-                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台次数:' + row.iAllStopCount + '<br/>总停台(时:分:秒):' + row.sAllStopTime;
+                        return '平均车速:' + row.nbanciSpeed + '<br/>总停台:' + row.iAllStopCount + '次<br/>总停台(时:分:秒):' + row.sAllStopTime;
                     },
                 },]
             };
@@ -1651,6 +1616,37 @@
                     }
                 });
             }
+
+            function GetcontainerBar3() {
+                //ajax动态获取数据
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Content("~/Loom/LoomAnalysisPie4_1?Time=")" + $('#DayTime7').val() + "&sClassName=" + $('#Class7').select2("data")[0].text,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            optionBar3.xAxis[0].data = [];
+                            optionBar3.series[0].data = [];
+                            for (var i in result) {
+                                optionBar3.xAxis[0].data.push(result[i].name);
+                                optionBar3.series[0].data.push(result[i].value);
+                            }
+                            // 为echarts对象加载数据
+                            myChartBar3.setOption(optionBar3);
+                        }
+                        //else {
+                        //    //没有返回结果时，清空画布
+                        //    myChartBar3.clear();
+                        //}
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert("Ajax请求失败，错误状态为:" + XMLHttpRequest.status);
+
+                    }
+                });
+            }
+
         });
 
     </script>

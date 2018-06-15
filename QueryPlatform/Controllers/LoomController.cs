@@ -465,6 +465,19 @@ namespace MetronicTest.Controllers
         }
 
         /// <summary>
+        /// 获取低效率机台
+        /// </summary>
+        public JsonResult LoomAnalysisPie4_1(string Time, string sClassName)
+        {
+            JsonResult result = new JsonResult();
+            int iClassId = new LoomDAL().GetClassId(Time, sClassName);
+            List<DecimalData> list = new LoomDAL().LoomAnalysisPie4_1(iClassId);
+            //写入结果
+            result.Data = list;
+            return result;
+        }
+
+        /// <summary>
         /// 获取设备产量月报
         /// </summary>
         public JsonResult DayAnalysis1(string time)

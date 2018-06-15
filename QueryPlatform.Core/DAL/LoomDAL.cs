@@ -271,6 +271,22 @@ ORDER BY X.name DESC");
         }
 
         /// <summary>
+        /// 获取低效率机台
+        /// </summary>
+        /// <returns></returns>
+        public List<DecimalData> LoomAnalysisPie4_1(int iClassId)
+        {
+            //获取数据集
+            DataTable data = DBHelper.DbContext().m_ExecuteReader("EXEC [dbo].[spzzAnalyBanGetMacefficiencyLow] @iDeptID='ALL',@iClassListID=:iClassId", iClassId);
+            List<DecimalData> list = new List<DecimalData>();
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new DecimalData { value = (decimal)row["nefficiency"], name = (string)row["iMachineID"] });
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 获取产量月报
         /// </summary>
         /// <returns></returns>
