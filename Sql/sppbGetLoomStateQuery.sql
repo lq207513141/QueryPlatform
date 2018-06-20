@@ -9,7 +9,6 @@ GO
 CREATE PROCEDURE dbo.sppbGetLoomStateQuery(
 @iType INT=0		--参数:1_车速,2_效率,3_打纬,4_运行时间,5_停机时间
 )
-WITH ENCRYPTION
 AS
 BEGIN TRY
     SET NOCOUNT ON;

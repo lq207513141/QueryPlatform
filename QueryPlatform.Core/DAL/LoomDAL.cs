@@ -87,13 +87,11 @@ LEFT JOIN dbo.vwMachineMap C(NOLOCK) ON C.iMachineID=X.iMachineID" + where + ord
             DataTable data = DBHelper.DbContext().m_ExecuteReader(@"SELECT * FROM
 (SELECT value=COUNT(1),name='运转'
 FROM dbo.OpMachine A(NOLOCK)
-JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
-WHERE B.iStatusID = 0
+WHERE A.iStatusID = 0
 UNION
 SELECT count = COUNT(1), name = '停台'
 FROM dbo.OpMachine A(NOLOCK)
-JOIN dbo.vwMachineMap B(NOLOCK) ON B.iMachineID = A.iMachineID
-WHERE B.iStatusID <> 0) X
+WHERE A.iStatusID <> 0) X
 ORDER BY X.name DESC");
             List<IntData> list = TableListChange.TableToList<IntData>(data);
             return list;

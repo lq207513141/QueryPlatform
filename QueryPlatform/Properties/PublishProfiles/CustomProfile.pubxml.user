@@ -752,19 +752,19 @@
       <publishTime>05/13/2018 18:48:32</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll">
-      <publishTime>06/13/2018 17:12:08</publishTime>
+      <publishTime>06/20/2018 17:05:03</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.dll.config">
       <publishTime>05/10/2018 08:57:16</publishTime>
     </File>
     <File Include="bin/QueryPlatform.Core.pdb">
-      <publishTime>06/13/2018 17:12:08</publishTime>
+      <publishTime>06/20/2018 17:05:03</publishTime>
     </File>
     <File Include="bin/QueryPlatform.dll">
-      <publishTime>06/13/2018 17:12:13</publishTime>
+      <publishTime>06/20/2018 17:05:09</publishTime>
     </File>
     <File Include="bin/QueryPlatform.pdb">
-      <publishTime>06/13/2018 17:12:13</publishTime>
+      <publishTime>06/20/2018 17:05:09</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/27/2016 14:50:24</publishTime>
@@ -941,13 +941,13 @@
       <publishTime>05/22/2018 08:25:43</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>04/04/2018 10:24:50</publishTime>
+      <publishTime>06/20/2018 15:34:14</publishTime>
     </File>
     <File Include="Views/Loom/DayAnalysis.cshtml">
       <publishTime>05/31/2018 09:44:50</publishTime>
     </File>
     <File Include="Views/Loom/LoomAnalysis.cshtml">
-      <publishTime>06/13/2018 11:09:38</publishTime>
+      <publishTime>06/20/2018 10:45:55</publishTime>
     </File>
     <File Include="Views/Loom/LoomAnalysisPie.cshtml">
       <publishTime>05/29/2018 13:48:36</publishTime>
@@ -980,7 +980,7 @@
       <publishTime>06/01/2018 14:46:17</publishTime>
     </File>
     <File Include="Views/Query/StateNowList.cshtml">
-      <publishTime>05/29/2018 08:26:26</publishTime>
+      <publishTime>06/20/2018 09:55:33</publishTime>
     </File>
     <File Include="Views/Query/Tables.cshtml">
       <publishTime>05/07/2018 15:11:04</publishTime>
@@ -989,7 +989,13 @@
       <publishTime>04/04/2018 10:24:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/01/2018 09:06:41</publishTime>
+      <publishTime>06/20/2018 15:47:23</publishTime>
+    </File>
+    <File Include="Views/Steamer/StateNowList.cshtml">
+      <publishTime>06/20/2018 17:03:32</publishTime>
+    </File>
+    <File Include="Views/Warping/StateNowList.cshtml">
+      <publishTime>06/20/2018 11:04:25</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/04/2018 10:24:50</publishTime>

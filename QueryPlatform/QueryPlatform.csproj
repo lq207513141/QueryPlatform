@@ -154,6 +154,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoomController.cs" />
     <Compile Include="Controllers\BeamLibraryController.cs" />
+    <Compile Include="Controllers\SteamerController.cs" />
+    <Compile Include="Controllers\WarpingController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -461,6 +463,8 @@
     <Content Include="Views\BeamLibrary\Query.cshtml" />
     <Content Include="Views\BeamLibrary\CountQuery.cshtml" />
     <Content Include="Views\Loom\LoomAnalysis.cshtml" />
+    <Content Include="Views\Warping\StateNowList.cshtml" />
+    <Content Include="Views\Steamer\StateNowList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

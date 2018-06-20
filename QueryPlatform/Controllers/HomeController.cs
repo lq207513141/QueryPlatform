@@ -10,8 +10,7 @@ namespace QueryPlatform.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
+            Response.Redirect("~/Loom/LoomAnalysis");
             return View();
         }
     }

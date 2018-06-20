@@ -83,6 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\BeamLibraryDAL.cs" />
+    <Compile Include="DAL\SteamerDAL.cs" />
+    <Compile Include="DAL\WarpingDAL.cs" />
     <Compile Include="DAL\YarnMachineDAL.cs" />
     <Compile Include="DAL\LoomDAL.cs" />
     <Compile Include="DAL\OpMachineDAL.cs" />
@@ -92,6 +94,8 @@
     <Compile Include="Model\BeamLibrary\BeamLibrary.cs" />
     <Compile Include="Model\Loom\LoomWorkerDay.cs" />
     <Compile Include="Model\Loom\LoomProductNoDay.cs" />
+    <Compile Include="Model\Steamer\Steamer.cs" />
+    <Compile Include="Model\Warping\Warping.cs" />
     <Compile Include="Model\Yarn\Machine.cs" />
     <Compile Include="Model\Normal.cs" />
     <Compile Include="Model\Lable.cs" />
